@@ -9,4 +9,4 @@ elif [ -L ~/.gitconfig ]; then
 fi
 
 # create a soft link
-ln -s gitconfig /home/haoc/.gitconfig
+ln -s "$(pwd)/gitconfig" ~/.gitconfig
