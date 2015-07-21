@@ -1,0 +1,10 @@
+[user]
+	name = haocs
+	email = c@haoc.io
+[color]
+	ui = auto
+	branch = auto
+	diff = auto
+	status = auto
+[core]
+	ediotr = /usr/bin/vim
