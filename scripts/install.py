@@ -6,8 +6,8 @@ from subprocess import call
 
 # Check OS info
 def get_os():
-  print(platform.platform())
   x = platform.platform().lower()
+  print("[ " + x + " ]")
   if 'ubuntu' in x:
     _os = 'ubuntu'
   elif 'darwin' in x:
