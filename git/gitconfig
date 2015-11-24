@@ -1,21 +1,18 @@
+# This is Git's per-user configuration file.
 [user]
-	name = haocs
-	email = c@haoc.io
+# Please adapt and uncomment the following lines:
+	name = Hao Chen 
+	email = hach@microsoft.com
+
 [color]
 	ui = auto
 	branch = auto
 	diff = auto
 	status = auto
-[core]
-	ediotr = /usr/bin/vim
 
 [alias]
 	st = status
-	co = checkout
-	cob = checkout -b
-	# Find the parent branch !!! ack pre-installed is required.
-  	dad = !"git show-branch -a | ack '\\*' | ack -v \"`git rev-parse --abbrev-ref HEAD`\" | head -n1 | sed 's/.*\\[\\(.*\\)\\].*/\\1/' | sed 's/[\\^~].*//'"
-
-	lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
-	lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
-	lg = !"git lg1"
+# Show log in a compact way
+	l = log --graph --oneline --decorate
+# Diff file with cached version(Diff after file been added)
+	dfc = diff --cached
