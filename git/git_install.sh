@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 if [ -f ~/.gitconfig ]; then
 	echo "Found old .gitconfig, will archive ~> .gitconfig_bk"
