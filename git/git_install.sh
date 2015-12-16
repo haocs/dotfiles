@@ -1,4 +1,6 @@
 #!/bin/bash
+INSTALL_TO=~
+CUR_DIR=`pwd`
 
 if [ -f ~/.gitconfig ]; then
 	echo "Found old .gitconfig, will archive ~> .gitconfig_bk"
@@ -9,4 +11,4 @@ elif [ -L ~/.gitconfig ]; then
 fi
 
 # create a soft link
-ln -s "$(pwd)/gitconfig" ~/.gitconfig
+ln -s "$CUR_DIR/gitconfig" "$INSTALL_TO/.gitconfig"
