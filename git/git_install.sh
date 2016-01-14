@@ -11,4 +11,6 @@ elif [ -L ~/.gitconfig ]; then
 fi
 
 # create a soft link
+echo "Creating soft link for config file"
 ln -s "$CUR_DIR/gitconfig" "$INSTALL_TO/.gitconfig"
+echo "Done"
