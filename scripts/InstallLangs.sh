@@ -10,13 +10,13 @@ install_go() {
 	wget "$url/$pkgName"
 	sudo tart -C /usr/local -xzf "$pkgName"
 	# Set Gopath
-	if [ -f "~/.vimrc" ];
+	if [ -f "~/.bashrc" ];
 	then
 		echo "set golng config"
-		echo "export GOROOT=/usr/local/go" | tee ~/.vimrc
-		echo "export PATH=$GOROOT/bin:$PATH" | tee ~/.vimcr
+		echo "export GOROOT=/usr/local/go" | tee ~/.bashrc
+		echo "export PATH=$GOROOT/bin:$PATH" | tee ~/.bashrc
 	else 
-		echo ".vimrc is not found, you have to setup the config yourselft"
+		echo ".bashrc is not found, you have to setup the config yourselft"
 	fi
 }
 
