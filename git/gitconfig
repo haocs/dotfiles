@@ -1,7 +1,9 @@
 [user]
-# Use primary email and name for github
 	name = Hao Chen
 	email = hach@microsoft.com
+
+[core]
+	editor = vim
 
 [color]
 	ui = auto
@@ -11,6 +13,9 @@
 
 [alias]
 	st = status
+	df = diff
+	co = checkout
+	cmt = commit -v
 # Show log in a compact way
 	l = log --graph --oneline --decorate
 # Diff file with cached version(Diff after file been added)
