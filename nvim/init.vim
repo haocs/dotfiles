@@ -1,5 +1,12 @@
 
-"let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+"*****************************************************************************
+"" 
+"" Hao`s NeoVim Config
+""
+"*****************************************************************************"
+
+"Enalle on Unbuntu and DISABLE on Macos
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 "*****************************************************************************
 "" Plugin Setup
@@ -107,13 +114,6 @@ if has("gui_running")
 else
   let g:CSApprox_loaded = 1
 
-  if $COLORTERM == 'gnome-terminal'
-    set term=gnome-256color
-  else
-    if $TERM == 'xterm'
-      set term=xterm-256color
-    endif
-  endif
 endif
 
 if &term =~ '256color'
