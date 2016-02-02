@@ -32,9 +32,17 @@ fi
 
 if ! is_exist python3 ;
 then
-	echo "Install python3"
-	sudo apt-get install python3
-	sudo apt-get install python3-pip
+	echo "Install python3 and pip"
+	sudo apt-get install software-properties-common
+	sudo apt-get install python-software-properties
+
+	# Install Pip for python and python3
+	sudo apt-get install python-dev python-pip python3-dev python3-pip
+	""" If error on older versions, uncomment following lines """
+	# sudo apt-get install python-dev python-pip python3-dev
+	# sudo apt-get install python3-setuptools
+	# sudo easy_install3 pip
+
 else
 	echo "python3 exists"
 fi
