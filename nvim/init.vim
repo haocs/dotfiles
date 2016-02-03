@@ -29,6 +29,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'sheerun/vim-polyglot'
 "Plug 'vim-scripts/grep.vim'
 Plug 'vim-scripts/CSApprox'
+Plug 'mbbill/undotree'
 
 "" colors
 Plug 'freeo/vim-kalisi'
@@ -41,6 +42,12 @@ if exists('s:install_plug')
     augroup END
 endif
 "}
+
+" Undotree persistent
+if has("persistent_undo")
+    set undodir=~/.undodir/
+    set undofile
+endif
 
 "*****************************************************************************
 "" Basic Setup
