@@ -30,6 +30,8 @@ Plug 'sheerun/vim-polyglot'
 "Plug 'vim-scripts/grep.vim'
 Plug 'vim-scripts/CSApprox'
 Plug 'mbbill/undotree'
+Plug 'majutsushi/tagbar'
+Plug 'fatih/vim-go'
 
 "" colors
 Plug 'freeo/vim-kalisi'
@@ -237,6 +239,9 @@ let g:syntastic_style_warning_symbol = '⚠'
 let g:syntastic_auto_loc_list=1
 let g:syntastic_aggregate_errors = 1
 
+"" UndoTree configuration
+nnoremap <F5> :UndotreeToggle<cr>
+
 "" Buffer nav
 noremap <leader>z :bp<CR>
 noremap <leader>q :bp<CR>
@@ -249,12 +254,44 @@ noremap <leader>c :bd<CR>
 "" Clean search (highlight)
 nnoremap <silent> <leader><space> :noh<cr>
 
+"*****************************************************************************
+"" Languages config 
+"*****************************************************************************
+" Tagbar
+nmap <silent> <F4> :TagbarToggle<CR>
+let g:tagbar_autofocus = 1
 
+let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [  'p:package', 'i:imports:1', 'c:constants', 'v:variables',
+        \ 't:types',  'n:interfaces', 'w:fields', 'e:embedded', 'm:methods',
+        \ 'r:constructor', 'f:functions' ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : { 't' : 'ctype', 'n' : 'ntype' },
+    \ 'scope2kind' : { 'ctype' : 't', 'ntype' : 'n' },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
+    \ }
 
-
-
-
-
+" vim-go
+augroup FileType go
+"" Golang
+au FileType go nmap <leader>r <Plug>(go-run)
+au FileType go nmap <leader>b <Plug>(go-build)
+au FileType go nmap <leader>t <Plug>(go-test)
+au FileType go nmap <leader>c <Plug>(go-coverage)
+" check def 
+au FileType go nmap <Leader>ds <Plug>(go-def-split)
+au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
+au FileType go nmap <Leader>dt <Plug>(go-def-tab)
+" check go doc
+au FileType go nmap <Leader>gd <Plug>(go-doc)
+au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
+" who has implemented
+au FileType go nmap <Leader>s <Plug>(go-implements)
+" show type info for the wordh
+au FileType go nmap <Leader>i <Plug>(go-info)
+augroup END
 
 
 
