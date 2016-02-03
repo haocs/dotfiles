@@ -1,5 +1,6 @@
 #!/bin/sh
-INSTALL_TO=~
+#INSTALL_TO=~
+INSTALL_TO="$HOME"
 CUR_DIR=`pwd`
 
 warn() {

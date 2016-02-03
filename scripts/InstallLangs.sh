@@ -5,19 +5,14 @@ is_exist() {
 }
 
 install_go() {
-	url = "https://storage.googleapis.com/golang/"
-	pkgName = "go1.5.linux-amd64.tar.gz"
+	url="https://storage.googleapis.com/golang/"
+	pkgName="go1.5.linux-amd64.tar.gz"
 	wget "$url/$pkgName"
-	sudo tart -C /usr/local -xzf "$pkgName"
+	sudo tar -C /usr/local -xzf "$pkgName"
 	# Set Gopath
-	if [ -f "~/.bashrc" ];
-	then
-		echo "set golng config"
-		echo "export GOROOT=/usr/local/go" | tee ~/.bashrc
-		echo "export PATH=$GOROOT/bin:$PATH" | tee ~/.bashrc
-	else 
-		echo ".bashrc is not found, you have to setup the config yourselft"
-	fi
+		echo "Manually set golng config"
+		echo "export GOROOT=/usr/local/go"
+		echo "export PATH=$GOROOT/bin:$PATH"
 }
 
 echo "Install dependency..."
@@ -45,6 +40,16 @@ then
 
 else
 	echo "python3 exists"
+fi
+
+if ! is_exist nvim ;
+then
+	echo "Install NeoVim"
+    sudo add-apt-repository ppa:neovim-ppa/unstable
+	sudo apt-get update
+	sudo apt-get install neovim
+else 
+	echo "NeoVim exists"
 fi
 
 if ! is_exist ruby ;

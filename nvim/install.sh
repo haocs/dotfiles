@@ -1,5 +1,5 @@
 #!/bin/sh
-INSTALL_TO=~
+INSTALL_TO="$HOME/.config/nvim"
 CUR_DIR=`pwd`
 
 warn() {
@@ -12,15 +12,22 @@ die() {
 }
 
 install_vimrc () {
-    [ -e "$INSTALL_TO/vimrc" ] && die "$INSTALL_TO/vimrc already exists."
-    [ -e "~/.vim" ] && die "~/.vim already exists."
-    [ -f "~/.vimrc" ] && die "~/.vimrc already exists."
+    if [ -e "$INSTALL_TO/init.vim" ];
+    then
+	    echo "init.vim exists will make it init.vim_bk"
+	    mv "$INSTALL_TO/init.vim" "$INSTALL_TO/init.vim_vk"
+    fi
+    if [ ! -d "$INSTALL_TO" ];
+    then
+	    echo "create new folder"
+	    mkdir -p "$INSTALL_TO"
+    fi
 
-    # Symlink .vimrc and .vimrc.local
-    ln -s "$CUR_DIR/vimrc" "$INSTALL_TO/.vimrc" 
-    ln -s "$CUR_DIR/vimrc.local" "$INSTALL_TO/.vimrc.local" 
+    ln -s "$CUR_DIR/init.vim" `readlink -f "$INSTALL_TO/init.vim"`
 
-    echo "Installed and configured vim."
+
+	#echo "cp init.vim file to ~/.config/nvim/ MANUALLY"
+    echo "Installed and configured nvim."
 }
 
 install_vimrc

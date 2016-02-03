@@ -6,7 +6,7 @@
 "*****************************************************************************"
 
 "Enalle on Unbuntu and DISABLE on Macos
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+"let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 "*****************************************************************************
 "" Plugin Setup
