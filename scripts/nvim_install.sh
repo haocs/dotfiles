@@ -1,15 +1,6 @@
 #!/bin/sh
 INSTALL_TO="$HOME/.config/nvim"
-CUR_DIR=`pwd`
-
-warn() {
-    echo "$1" >&2
-}
-
-die() {
-    warn "$1"
-    exit 1
-}
+S_DIR=$(readlink -f "$(pwd)/../nvim")
 
 install_vimrc () {
     if [ -e "$INSTALL_TO/init.vim" ];
@@ -23,10 +14,8 @@ install_vimrc () {
 	    mkdir -p "$INSTALL_TO"
     fi
 
-    ln -s "$CUR_DIR/init.vim" `readlink -f "$INSTALL_TO/init.vim"`
+    ln -s "$S_DIR/init.vim" `readlink -f "$INSTALL_TO/init.vim"`
 
-
-	#echo "cp init.vim file to ~/.config/nvim/ MANUALLY"
     echo "Installed and configured nvim."
 }
 
