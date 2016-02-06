@@ -1,4 +1,5 @@
 #!/bin/sh
+
 INSTALL_TO="$HOME/.config/nvim"
 S_DIR=$(readlink -f "$(pwd)/../nvim")
 
@@ -16,6 +17,7 @@ install_vimrc () {
 
     ln -s "$S_DIR/init.vim" `readlink -f "$INSTALL_TO/init.vim"`
 
+	echo "alias vim='nvim'" | tee -a "$HOME/.bashrc"
     echo "Installed and configured nvim."
 }
 
