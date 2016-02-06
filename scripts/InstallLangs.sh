@@ -1,62 +1,48 @@
 #!/bin/bash
 
-is_exist() {
+exists() {
 	type "$1" > /dev/null 2>&1;
 }
 
 install_go() {
-	url="https://storage.googleapis.com/golang/"
-	pkgName="go1.5.linux-amd64.tar.gz"
-	wget "$url/$pkgName"
-	sudo tar -C /usr/local -xzf "$pkgName"
+	# Install to local
+	url="https://storage.googleapis.com/golang/go1.5.linux-amd64.tar.gz"
+	wget -qO- "$url" | tar -zxv -C "$HOME/.local/bin"
 	# Set Gopath
-		echo "Manually set golng config"
-		echo "export GOROOT=/usr/local/go"
-		echo "export PATH=$GOROOT/bin:$PATH"
+	if [ -f "$HOME/.bashrc" ] ;
+	then
+		echo 'export GOROOT=$HOME/.local/bin/go' | tee -a "$HOME/.bashrc"
+		echo 'export PATH=$GOROOT/bin:$PATH' | tee -a "$HOME/.bashrc"
+	else
+		echo "Set GOROOT manually!"
+	fi
+}
+
+install_py3() {
+	sudo apt-get install python3
+	pip_url="https://bootstrap.pypa.io/get-pip.py"
+	sudo wget -qO- "$pip_url" | python 
+	sudo wget -qO- "$pip_url" | python3 
 }
 
 echo "Install dependency..."
+if ! exists wget ; then sudo apt-get -y install wget curl; fi
 
-if ! is_exist go ;
+if ! exists go ; then install_go; fi
+if ! exists python ; then sudo apt-get install python; fi
+if ! exists python3 ; then install_py3; fi
+if ! exists ruby ;
 then
-	echo "Install golang";
-	install_go;
-else
-	echo "go exists"
+	gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+	\curl -sSL https://get.rvm.io | bash -s stable --ruby
 fi
 
-if ! is_exist python3 ;
+if ! exists nvim ;
 then
-	echo "Install python3 and pip"
-	sudo apt-get install software-properties-common
-	sudo apt-get install python-software-properties
-
-	# Install Pip for python and python3
-	sudo apt-get install python-dev python-pip python3-dev python3-pip
-	""" If error on older versions, uncomment following lines """
-	# sudo apt-get install python-dev python-pip python3-dev
-	# sudo apt-get install python3-setuptools
-	# sudo easy_install3 pip
-
-else
-	echo "python3 exists"
-fi
-
-if ! is_exist nvim ;
-then
-	echo "Install NeoVim"
     sudo add-apt-repository ppa:neovim-ppa/unstable
 	sudo apt-get update
 	sudo apt-get install neovim
-else 
-	echo "NeoVim exists"
 fi
 
-if ! is_exist ruby ;
-then
-	echo "Install ruby"
-	gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
-	\curl -sSL https://get.rvm.io | bash -s stable --ruby
-else
-	echo "ruby exists"
-fi
+# Update Configs 
+if [ -f "$HOME/.bashrc" ] ; then source "$HOME/.bashrc"; fi
