@@ -293,13 +293,3 @@ au FileType go nmap <Leader>s <Plug>(go-implements)
 " show type info for the wordh
 au FileType go nmap <Leader>i <Plug>(go-info)
 augroup END
-
-
-
-
-
-
-
-
-
-

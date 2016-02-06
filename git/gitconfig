@@ -16,6 +16,7 @@
 	df = diff
 	co = checkout
 	cmt = commit -v
+	acmt = commit -a -v
 # Show log in a compact way
 	l = log --graph --oneline --decorate
 # Diff file with cached version(Diff after file been added)
