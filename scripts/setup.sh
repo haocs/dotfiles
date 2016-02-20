@@ -6,6 +6,7 @@ exists() {
 
 install_go() {
 	# Install to local
+	if [ ! -d "$HOME/.local/bin" ]; then mkdir -p "$HOME/.local/bin"; fi
 	url="https://storage.googleapis.com/golang/go1.5.linux-amd64.tar.gz"
 	wget -qO- "$url" | tar -zxv -C "$HOME/.local/bin"
 	# Set Gopath
