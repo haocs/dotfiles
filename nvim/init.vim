@@ -197,6 +197,9 @@ noremap <leader>c :bd<CR>
 " Clean search (highlight)
 nnoremap <silent> <leader><space> :noh<cr>
 
+" Ctags
+map <F12> :! ctags -R .<cr>
+
 "*****************************************************************************
 "" Plugs  config
 "*****************************************************************************
@@ -210,7 +213,7 @@ if has("persistent_undo")
 endif
 
 " UndoTree configuration
-nnoremap <F5> :UndotreeToggle<cr>
+nnoremap <F2> :UndotreeToggle<cr>
 
 "--------------------------- NERDTree ------------------------
 " NERDTree configuration
@@ -225,8 +228,8 @@ let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
 let g:NERDTreeWinSize = 50
 " NERDTree KeyMapping
 " Locate current file in file systems
-nnoremap <silent> <F2> :NERDTreeFind<CR>
-noremap <F3> :NERDTreeToggle<CR>
+nnoremap <silent> <F3> :NERDTreeFind<CR>
+noremap <F4> :NERDTreeToggle<CR>
 " Close NERDTree if no other window open
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
@@ -287,7 +290,7 @@ noremap <Leader>gd :Gvdiff<CR>
 "" Languages config
 "*****************************************************************************
 " Tagbar
-nmap <silent> <F4> :TagbarToggle<CR>
+nmap <silent> <F6> :TagbarToggle<CR>
 let g:tagbar_autofocus = 1
 
 let g:tagbar_type_go = {
@@ -301,11 +304,6 @@ let g:tagbar_type_go = {
     \ 'ctagsbin'  : 'gotags',
     \ 'ctagsargs' : '-sort -silent'
     \ }
-
-" vim-python
-augroup FileType py
-" python
-augroup END
 
 " vim-go
 augroup FileType go
