@@ -1,16 +1,12 @@
-
-"*****************************************************************************
-"" 
+" ***************************************************************************
+""
 "" Hao`s NeoVim Config
 ""
-"*****************************************************************************"
-
-"Enalle on Unbuntu and DISABLE on Macos
-"let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+"*****************************************************************************
 
 "*****************************************************************************
 "" Plugin Setup
-"*****************************************************************************"
+"*****************************************************************************
 "Vim-Plug {
 let s:vim_plug_dir=expand($HOME.'/.config/nvim/autoload')
 if !filereadable(s:vim_plug_dir.'/plug.vim')
@@ -22,20 +18,23 @@ call plug#begin('~/.config/nvim/plugged')
 
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-fugitive'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'bronson/vim-trailing-whitespace'
+Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
-Plug 'sheerun/vim-polyglot'
-"Plug 'vim-scripts/grep.vim'
+Plug 'sheerun/vim-polyglot' " Language packs
 Plug 'vim-scripts/CSApprox'
 Plug 'mbbill/undotree'
 Plug 'majutsushi/tagbar'
+Plug 'scrooloose/syntastic'
 Plug 'fatih/vim-go'
 
-"" colors
-Plug 'freeo/vim-kalisi'
+" colors
+" Some themes working for neovim.
+" Plug 'freeo/vim-kalisi'
+Plug 'morhetz/gruvbox'
+
 call plug#end()
 
 if exists('s:install_plug')
@@ -46,42 +45,36 @@ if exists('s:install_plug')
 endif
 "}
 
-" Undotree persistent
-if has("persistent_undo")
-    set undodir=~/.undodir/
-    set undofile
-endif
-
 "*****************************************************************************
 "" Basic Setup
-"*****************************************************************************"
-"" Encoding
+"*****************************************************************************
+" Encoding
 set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=utf-8
 
-"" Fix backspace indent
+" Fix backspace indent
 set backspace=indent,eol,start
 
-"" Tabs. May be overriten by autocmd rules
+" Tabs. May be overriten by autocmd rules
 set tabstop=4
 set softtabstop=0
 set shiftwidth=4
 set expandtab
 
-"" Map leader to ,
+" Map leader to ,
 let mapleader=','
 
-"" Enable hidden buffers
+" Enable hidden buffers
 set hidden
 
-"" Searching
+" Searching
 set hlsearch
 set incsearch
 set ignorecase
 set smartcase
 
-"" Encoding
+" Encoding
 set bomb
 set binary
 
@@ -104,12 +97,14 @@ let g:session_command_aliases = 1
 "" Visual Settings
 "*****************************************************************************
 syntax on
+syntax enable
+
 set ruler
 set number
 
 let no_buffers_menu=1
 set background=dark
-colors kalisi
+colors gruvbox
 
 set mousemodel=popup
 set cursorline
@@ -130,14 +125,16 @@ if &term =~ '256color'
   set t_ut=
 endif
 
-"" Disable the blinking cursor.
+"let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+
+" Disable the blinking cursor.
 set gcr=a:blinkon0
 set scrolloff=3
 
-"" Status bar
+" Status bar
 set laststatus=2
 
-"" Use modeline overrides
+" Use modeline overrides
 set modeline
 set modelines=10
 
@@ -151,16 +148,10 @@ if exists("*fugitive#statusline")
   set statusline+=%{fugitive#statusline()}
 endif
 
-" vim-airline
-let g:airline_theme = 'dark'
-let g:airline#extensions#syntastic#enabled = 1
-let g:airline#extensions#branch#enabled = 1
-let g:airline#extensions#tabline#enabled = 1
-
 "*****************************************************************************
 "" Abbreviations
 "*****************************************************************************
-"" no one is really happy until you have this shortcuts
+" no one is really happy until you have this shortcuts
 cnoreabbrev W! w!
 cnoreabbrev Q! q!
 cnoreabbrev Qall! qall!
@@ -172,19 +163,8 @@ cnoreabbrev W w
 cnoreabbrev Q q
 cnoreabbrev Qall qall
 
-"" NERDTree configuration
-let g:NERDTreeChDirMode=2
-let g:NERDTreeIgnore=['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__']
-"let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
-let g:NERDTreeShowBookmarks=1
-let g:nerdtree_tabs_focus_on_files=1
-let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
-let g:NERDTreeWinSize = 50
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
-nnoremap <silent> <F2> :NERDTreeFind<CR>
-noremap <F3> :NERDTreeToggle<CR>
-"" Close NERDTree if no other window open
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" Allow saving of files as sudo when I forgot to start vim using sudo.
+cmap w!! w !sudo tee > /dev/null %
 
 " terminal emulation
 nnoremap <silent> <leader>sh :terminal<CR>
@@ -192,71 +172,117 @@ nnoremap <silent> <leader>sh :terminal<CR>
 "*****************************************************************************
 "" Mappings
 "*****************************************************************************
-"" Split
+" Split
 noremap <Leader>h :<C-u>split<CR>
 noremap <Leader>v :<C-u>vsplit<CR>
 
-"" Git
-noremap <Leader>ga :Gwrite<CR>
-noremap <Leader>gc :Gcommit<CR>
-noremap <Leader>gsh :Gpush<CR>
-noremap <Leader>gll :Gpull<CR>
-noremap <Leader>gs :Gstatus<CR>
-noremap <Leader>gb :Gblame<CR>
-noremap <Leader>gd :Gvdiff<CR>
-noremap <Leader>gr :Gremove<CR>
-
-"" Tabs
+" Tabs
 nnoremap <Tab> gt
 nnoremap <S-Tab> gT
 nnoremap <silent> <S-t> :tabnew<CR>
 
-"" Set working directory
+" Set working directory
 nnoremap <leader>. :lcd %:p:h<CR>
 
-"" Opens an edit command with the path of the currently edited file filled in
+" Opens an edit command with the path of the currently edited file filled in
 noremap <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
 
-"" Opens a tab edit command with the path of the currently edited file filled
+" Opens a tab edit command with the path of the currently edited file filled
 noremap <Leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
 
-"" ctrlp.vim
+" Buffer nav
+noremap <leader>z :bp<CR>
+noremap <leader>w :bn<CR>
+
+" Close buffer
+noremap <leader>c :bd<CR>
+
+" Clean search (highlight)
+nnoremap <silent> <leader><space> :noh<cr>
+
+"*****************************************************************************
+"" Plugs  config
+"*****************************************************************************
+"
+
+"--------------------------- UndoTree -------------------------
+" Undotree persistent
+if has("persistent_undo")
+    set undodir=~/.undodir/
+    set undofile
+endif
+
+" UndoTree configuration
+nnoremap <F5> :UndotreeToggle<cr>
+
+"--------------------------- NERDTree ------------------------
+" NERDTree configuration
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
+let g:NERDTreeChDirMode=2
+let NERDTreeShowHidden=1
+let g:NERDTreeIgnore=['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__']
+"let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
+let g:NERDTreeShowBookmarks=1
+let g:nerdtree_tabs_focus_on_files=1
+let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
+let g:NERDTreeWinSize = 50
+" NERDTree KeyMapping
+" Locate current file in file systems
+nnoremap <silent> <F2> :NERDTreeFind<CR>
+noremap <F3> :NERDTreeToggle<CR>
+" Close NERDTree if no other window open
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+"------------------------ vim-airline -------------------------
+" vim-airline
+let g:airline_theme = 'dark'
+let g:airline#extensions#syntastic#enabled = 1
+let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#tabline#enabled = 1
+
+"------------------------- ctrip.vim -------------------------
 set wildmode=list:longest,list:full
 set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__
 let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist)|(\.(swp|tox|ico|git|hg|svn))$'
 let g:ctrlp_user_command = "find %s -type f | grep -Ev '"+ g:ctrlp_custom_ignore +"'"
 let g:ctrlp_use_caching = 0
-cnoremap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
-noremap <leader>b :CtrlPBuffer<CR>
 let g:ctrlp_map = '<leader>e'
 let g:ctrlp_open_new_file = 'r'
+" ctrip.vim KeyMapping
+cnoremap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
+noremap <leader>b :CtrlPBuffer<CR>
 
-" syntastic
-let g:syntastic_always_populate_loc_list=1
+"-------------------------syntastic--------------------------
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
 let g:syntastic_error_symbol='✗'
 let g:syntastic_warning_symbol='⚠'
-let g:syntastic_style_error_symbol = '✗'
-let g:syntastic_style_warning_symbol = '⚠'
+let g:syntastic_style_error_symbol = 's✗'
+let g:syntastic_style_warning_symbol = 's⚠'
 let g:syntastic_auto_loc_list=1
 let g:syntastic_aggregate_errors = 1
+let g:syntastic_always_populate_loc_list=1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_python_checkers = ['pylint', 'python']
 
-"" UndoTree configuration
-nnoremap <F5> :UndotreeToggle<cr>
+" syntastic Keymappings
+noremap <silent> <F7> :SyntasticCheck<CR>
+"noremap <silent> <F8> :SyntasticToggleMode<CR>
 
-"" Buffer nav
-noremap <leader>z :bp<CR>
-noremap <leader>q :bp<CR>
-noremap <leader>x :bn<CR>
-noremap <leader>w :bn<CR>
+"-------------------------Git--------------------------
+" noremap <Leader>ga :Gwrite<CR>
+" noremap <Leader>gc :Gcommit<CR>
+" noremap <Leader>gsh :Gpush<CR>
+" noremap <Leader>gll :Gpull<CR>
+noremap <Leader>gs :Gstatus<CR>
+noremap <Leader>gb :Gblame<CR>
+noremap <Leader>gd :Gvdiff<CR>
+" noremap <Leader>gr :Gremove<CR>
 
-"" Close buffer
-noremap <leader>c :bd<CR>
-
-"" Clean search (highlight)
-nnoremap <silent> <leader><space> :noh<cr>
 
 "*****************************************************************************
-"" Languages config 
+"" Languages config
 "*****************************************************************************
 " Tagbar
 nmap <silent> <F4> :TagbarToggle<CR>
@@ -274,14 +300,19 @@ let g:tagbar_type_go = {
     \ 'ctagsargs' : '-sort -silent'
     \ }
 
+" vim-python
+augroup FileType py
+" python
+augroup END
+
 " vim-go
 augroup FileType go
-"" Golang
+" Golang
 au FileType go nmap <leader>r <Plug>(go-run)
 au FileType go nmap <leader>b <Plug>(go-build)
 au FileType go nmap <leader>t <Plug>(go-test)
 au FileType go nmap <leader>c <Plug>(go-coverage)
-" check def 
+" check def
 au FileType go nmap <Leader>ds <Plug>(go-def-split)
 au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
 au FileType go nmap <Leader>dt <Plug>(go-def-tab)
