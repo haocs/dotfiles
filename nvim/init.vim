@@ -166,8 +166,6 @@ cnoreabbrev Qall qall
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cmap w!! w !sudo tee > /dev/null %
 
-" terminal emulation
-nnoremap <silent> <leader>sh :terminal<CR>
 
 "*****************************************************************************
 "" Mappings
@@ -181,14 +179,13 @@ nnoremap <Tab> gt
 nnoremap <S-Tab> gT
 nnoremap <silent> <S-t> :tabnew<CR>
 
+" terminal emulation
+nnoremap <silent> <leader>sh :terminal<CR>
+" exit 'terminal' mode
+:tnoremap <Esc> <C-\><C-n>
+
 " Set working directory
 nnoremap <leader>. :lcd %:p:h<CR>
-
-" Opens an edit command with the path of the currently edited file filled in
-noremap <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
-
-" Opens a tab edit command with the path of the currently edited file filled
-noremap <Leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
 
 " Buffer nav
 noremap <leader>z :bp<CR>
@@ -251,6 +248,11 @@ let g:ctrlp_open_new_file = 'r'
 " ctrip.vim KeyMapping
 cnoremap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
 noremap <leader>b :CtrlPBuffer<CR>
+" Opens an edit command with the path of the currently edited file filled in
+noremap <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
+" Opens a tab edit command with the path of the currently edited file filled
+noremap <Leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
+
 
 "-------------------------syntastic--------------------------
 set statusline+=%#warningmsg#

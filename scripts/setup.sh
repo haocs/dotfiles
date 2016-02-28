@@ -22,8 +22,9 @@ install_go() {
 install_py3() {
 	sudo apt-get install python3
 	pip_url="https://bootstrap.pypa.io/get-pip.py"
-	sudo wget -qO- "$pip_url" | python 
-	sudo wget -qO- "$pip_url" | python3 
+	sudo wget -qO- "$pip_url" | python
+	sudo wget -qO- "$pip_url" | python3
+	sduo pip install pylint
 }
 
 echo "Install dependency..."
@@ -45,8 +46,8 @@ then
 	sudo apt-get install neovim
 fi
 
-# Update Configs 
-if [ -f "$HOME/.bashrc" ] ; 
-then 
+# Update Configs
+if [ -f "$HOME/.bashrc" ] ;
+then
 	source "$HOME/.bashrc"
 fi
