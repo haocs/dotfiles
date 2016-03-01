@@ -44,6 +44,8 @@ then
     sudo add-apt-repository ppa:neovim-ppa/unstable
 	sudo apt-get update
 	sudo apt-get install neovim
+	# To use system clipboard in neovim
+	sudo apt-get install xclip
 fi
 
 # Update Configs

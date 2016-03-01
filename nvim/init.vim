@@ -166,6 +166,10 @@ cnoreabbrev Qall qall
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cmap w!! w !sudo tee > /dev/null %
 
+" Use system clipboard with yank and paste
+if executable("xclip")
+	set clipboard+=unnamedplus
+endif
 
 "*****************************************************************************
 "" Mappings
