@@ -20,6 +20,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-commentary'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
@@ -28,7 +29,11 @@ Plug 'vim-scripts/CSApprox'
 Plug 'mbbill/undotree'
 Plug 'majutsushi/tagbar'
 Plug 'scrooloose/syntastic'
+" Golang Plugs
 Plug 'fatih/vim-go'
+" Python Plugs
+Plug 'davidhalter/jedi-vim'
+Plug 'Yggdroot/indentLine'
 
 " colors
 " Some themes working for neovim.
@@ -235,7 +240,7 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 
 "------------------------ vim-airline -------------------------
 " vim-airline
-let g:airline_theme = 'dark'
+let g:airline_theme = 'base16'
 let g:airline#extensions#syntastic#enabled = 1
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
@@ -270,6 +275,8 @@ let g:syntastic_aggregate_errors = 1
 let g:syntastic_always_populate_loc_list=1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_python_checkers = ['pylint', 'python']
+" let g:syntastic_python_checkers=['python', 'flake8']
+" let g:syntastic_python_flake8_post_args='--ignore=W391'
 
 " syntastic Keymappings
 " noremap <silent> <F7> :SyntasticCheck<CR>
@@ -306,7 +313,30 @@ let g:tagbar_type_go = {
     \ }
 
 " python
-au FileType python nnoremap <buffer> <F5> :exec '!python' shellescape(@%, 1)<CR>
+"" Custom configs
+
+" vim-python
+augroup vimrc-python
+  autocmd!
+  autocmd FileType python setlocal expandtab shiftwidth=4 tabstop=8 colorcolumn=79
+      \ formatoptions+=croq softtabstop=4 smartindent
+      \ cinwords=if,elif,else,for,while,try,except,finally,def,class,with
+
+  " Run current py file
+  au FileType python nnoremap <buffer> <F5> :exec '!python' shellescape(@%, 1)<CR>
+augroup END
+
+" jedi-vim
+let g:jedi#popup_on_dot = 0
+let g:jedi#goto_assignments_command = "<leader>g"
+let g:jedi#goto_definitions_command = "<leader>d"
+let g:jedi#documentation_command = "K"
+let g:jedi#usages_command = "<leader>n"
+let g:jedi#rename_command = "<leader>r"
+let g:jedi#show_call_signatures = "0"
+let g:jedi#completions_command = "<C-Space>"
+let g:jedi#smart_auto_mappings = 0
+
 
 " vim-go
 augroup FileType go
