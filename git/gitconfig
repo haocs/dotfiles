@@ -16,6 +16,7 @@
 	df = diff
 	dif = diff
 	co = checkout
+	c = commit
 	cmt = commit -v
 	acmt = commit -a -v
 # Show log in a compact way
