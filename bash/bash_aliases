@@ -1,4 +1,14 @@
+# List commands
+alias ls='ls --color=auto'
 alias ll="ls -alh"
+alias l.='ls -d .*'
+
+# Change Dir
+alias cd..='cd ..'
+alias ..='cd ..'
+alias .2='cd ../../'
+alias .3='cd ../../../'
+alias .4='cd ../../../../'
 
 # For vim
 if [ -e ~/.config/nvim/init.vim ]; then
