@@ -188,7 +188,7 @@ nnoremap <silent> <leader>sh :terminal<CR>
 nnoremap <leader>. :lcd %:p:h<CR>
 
 " Buffer nav
-noremap <leader>z :bp<CR>
+noremap <leader>q :bp<CR>
 noremap <leader>w :bn<CR>
 
 " Close buffer
@@ -272,8 +272,8 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_python_checkers = ['pylint', 'python']
 
 " syntastic Keymappings
-noremap <silent> <F7> :SyntasticCheck<CR>
-"noremap <silent> <F8> :SyntasticToggleMode<CR>
+" noremap <silent> <F7> :SyntasticCheck<CR>
+noremap <silent> <F8> :SyntasticToggleMode<CR>
 
 "-------------------------Git--------------------------
 " noremap <Leader>ga :Gwrite<CR>
@@ -304,6 +304,9 @@ let g:tagbar_type_go = {
     \ 'ctagsbin'  : 'gotags',
     \ 'ctagsargs' : '-sort -silent'
     \ }
+
+" python
+au FileType python nnoremap <buffer> <F5> :exec '!python' shellescape(@%, 1)<CR>
 
 " vim-go
 augroup FileType go
