@@ -51,5 +51,7 @@ fi
 # Update Configs
 if [ -f "$HOME/.bashrc" ] ;
 then
+	# copy aliases files
+	ln -s "$(readlink -f "$(pwd)/../bash")/bash_aliases" "$HOME/.bash_aliases"
 	source "$HOME/.bashrc"
 fi
