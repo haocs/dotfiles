@@ -1,24 +1,27 @@
 #!/bin/sh
 
-INSTALL_TO="$HOME/.config/nvim"
-S_DIR=$(readlink -f "$(pwd)/../nvim")
-
 install_vimrc () {
-    if [ -e "$INSTALL_TO/init.vim" ];
+
+	NVIM_INSTALL_DIR="$HOME/.config/nvim"
+	NVIM_S_DIR=$(readlink -f "$(pwd)/../nvim")
+
+    if [ -e "$NVIM_INSTALL_DIR/init.vim" ];
     then
 	    echo "init.vim exists will make it init.vim_bk"
-	    mv "$INSTALL_TO/init.vim" "$INSTALL_TO/init.vim_vk"
+	    mv "$NVIM_INSTALL_DIR/init.vim" "$NVIM_INSTALL_DIR/init.vim_vk"
     fi
-    if [ ! -d "$INSTALL_TO" ];
+    if [ ! -d "$NVIM_INSTALL_DIR" ];
     then
 	    echo "create new folder"
-	    mkdir -p "$INSTALL_TO"
+	    mkdir -p "$NVIM_INSTALL_DIR"
     fi
 
-    ln -s "$S_DIR/init.vim" `readlink -f "$INSTALL_TO/init.vim"`
+    ln -s "$NVIM_S_DIR/init.vim" `readlink -f "$NVIM_INSTALL_DIR/init.vim"`
 
 	echo "alias vim='nvim'" | tee -a "$HOME/.bashrc"
+	. "$HOME/.bashrc"
     echo "Installed and configured nvim."
 }
 
-install_vimrc
+export -f install_vimrc
+# install_vimrc
