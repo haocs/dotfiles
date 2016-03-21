@@ -9,12 +9,13 @@
 "*****************************************************************************
 "Vim-Plug {
 let s:vim_plug_dir=expand($HOME.'/.config/nvim/autoload')
+
 if !filereadable(s:vim_plug_dir.'/plug.vim')
     execute '!wget https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim -P '.s:vim_plug_dir
     let s:install_plug=1
 endif
 
-call plug#begin('~/.config/nvim/plugged')
+call plug#begin('$HOME/.config/nvim/plugged')
 
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-commentary'
