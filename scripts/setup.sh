@@ -22,8 +22,8 @@ install_go() {
 install_py3() {
 	sudo apt-get install python3
 	pip_url="https://bootstrap.pypa.io/get-pip.py"
-	sudo wget -qO- "$pip_url" | python
-	sudo wget -qO- "$pip_url" | python3
+	wget -qO- "$pip_url" | sudo python
+	wget -qO- "$pip_url" | sudo python3
 	sduo pip install pylint
 }
 
