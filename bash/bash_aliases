@@ -22,8 +22,19 @@ fi
 gt() {
 	if [ $# -eq 0 ]; then
 		git status
-	else 
+	else
 		git "$@"
 	fi
 }
 export -f gt
+
+# weahter cmd :)
+weather() {
+	URL="http://wttr.in/"
+	if [ $# -eq 0 ]; then
+		curl -4 "$URL""Seattle"
+	else
+		curl -4 "$URL$@"
+	fi
+}
+export -f weather
