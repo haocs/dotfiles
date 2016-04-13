@@ -3,6 +3,9 @@ alias ls='ls --color=auto'
 alias ll="ls -alh"
 alias l.='ls -d .*'
 
+# cmd from windows
+alias cls='clear'
+
 # Change Dir
 alias cd..='cd ..'
 alias ..='cd ..'
@@ -10,7 +13,7 @@ alias .2='cd ../../'
 alias .3='cd ../../../'
 alias .4='cd ../../../../'
 
-# For vim
+# For nvim
 if [ -e ~/.config/nvim/init.vim ]; then
 	alias vi="nvim"
 	alias vim="nvim"
@@ -32,7 +35,7 @@ export -f gt
 weather() {
 	URL="http://wttr.in/"
 	if [ $# -eq 0 ]; then
-		curl -4 "$URL""Seattle"
+		curl -4 "$URL""Bellevue"
 	else
 		curl -4 "$URL$@"
 	fi
