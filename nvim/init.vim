@@ -39,8 +39,9 @@ Plug 'Yggdroot/indentLine'
 
 " colors
 " Some themes working for neovim.
+Plug 'tomasr/molokai'
 Plug 'freeo/vim-kalisi'
-" Plug 'morhetz/gruvbox'
+Plug 'morhetz/gruvbox'
 
 call plug#end()
 
@@ -111,7 +112,7 @@ set number
 
 let no_buffers_menu=1
 set background=dark
-colors kalisi
+colors molokai
 
 set mousemodel=popup
 set cursorline
@@ -128,11 +129,11 @@ else
 
 endif
 
-if &term =~ '256color'
-  set t_ut=
-endif
+" if &term =~ '256color'
+"   set t_ut=
+" endif
 
-"let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 " Disable the blinking cursor.
 set gcr=a:blinkon0
@@ -245,11 +246,12 @@ noremap <F4> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 "------------------------ vim-airline -------------------------
-" vim-airline
-let g:airline_theme = 'base16'
+
+let g:airline_theme = 'powerlineish'
 let g:airline#extensions#syntastic#enabled = 1
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tagbar#enabled = 1
 
 "------------------------- ctrip.vim -------------------------
 set wildmode=list:longest,list:full
@@ -329,7 +331,7 @@ augroup vimrc-python
       \ cinwords=if,elif,else,for,while,try,except,finally,def,class,with
 
   " Run current py file
-  au FileType python nnoremap <buffer> <F5> :exec '!python' shellescape(@%, 1)<CR>
+  au FileType python nnoremap <buffer> <F5> :exec '!python3' shellescape(@%, 1)<CR>
 augroup END
 
 " jedi-vim
