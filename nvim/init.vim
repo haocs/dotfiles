@@ -30,6 +30,7 @@ Plug 'vim-scripts/CSApprox'
 Plug 'mbbill/undotree'
 Plug 'majutsushi/tagbar'
 Plug 'scrooloose/syntastic'
+Plug 'Valloric/YouCompleteMe'
 " Golang Plugs
 Plug 'fatih/vim-go'
 " Python Plugs
@@ -38,8 +39,8 @@ Plug 'Yggdroot/indentLine'
 
 " colors
 " Some themes working for neovim.
-" Plug 'freeo/vim-kalisi'
-Plug 'morhetz/gruvbox'
+Plug 'freeo/vim-kalisi'
+" Plug 'morhetz/gruvbox'
 
 call plug#end()
 
@@ -110,7 +111,7 @@ set number
 
 let no_buffers_menu=1
 set background=dark
-colors gruvbox
+colors kalisi
 
 set mousemodel=popup
 set cursorline

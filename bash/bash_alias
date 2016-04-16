@@ -34,10 +34,10 @@ export -f gt
 # weahter cmd :)
 weather() {
 	URL="http://wttr.in/"
-	if [ $# -eq 0 ]; then
-		curl -4 "$URL""Bellevue"
-	else
-		curl -4 "$URL$@"
+	LOC="Bellevue"
+	if [ $# -eq 1 ]; then
+		LOC="$@"
 	fi
+	curl -4 "$URL$LOC"
 }
 export -f weather

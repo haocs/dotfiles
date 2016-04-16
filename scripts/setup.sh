@@ -52,6 +52,7 @@ fi
 if [ -f "$HOME/.bashrc" ] ;
 then
 	# copy aliases files
-	ln -s "$(readlink -f "$(pwd)/../bash")/bash_aliases" "$HOME/.bash_aliases"
+	echo 'test -s ~/.bash_alias && . ~/.bash_alias || true' >> "$HOME/.bashrc"
+	ln -s "$(readlink -f "$(pwd)/../bash")/bash_alias" "$HOME/.bash_alias"
 	source "$HOME/.bashrc"
 fi
