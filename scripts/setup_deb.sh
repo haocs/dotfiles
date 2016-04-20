@@ -52,8 +52,8 @@ if ! exists nvim ; then install_neovim; fi
 # Update Configs
 if [ -f "$HOME/.bashrc" ] ;
 then
-	# copy aliases files
+	# copy alias files
 	echo 'test -s ~/.bash_alias && . ~/.bash_alias || true' >> "$HOME/.bashrc"
-	ln -s "$(readlink -f "$(pwd)/../bash")/bash_alias" "$HOME/.bash_alias"
+	ln -nfs "$(readlink -f "$(pwd)/../bash")/bash_alias" "$HOME/.bash_alias"
 	source "$HOME/.bashrc"
 fi

@@ -38,6 +38,7 @@ install_ruby() {
 
 install_neovim() {
 	sudo zypper install libtool autoconf automake cmake gcc-c++
+	sudo zypper install python3-devel python-devel
 	# build from source
 	git clone git@github.com:neovim/neovim.git
 	cd neovim
@@ -45,8 +46,8 @@ install_neovim() {
 	make clean
 	sudo make CMAKE_BUILD_TYPE=Release
 	sudo make install
-	# ln syntax.vim for neovim
-	sudo ln -s /usr/share/vim/current /usr/local/share/nvim
+	# ln syntax.vim for neovim. ONLY for SUSE
+	sudo ln -nfs /usr/share/vim/current /usr/local/share/nvim
 	# for YCM
 	sudo pip install neovim
 	echo "To use YCM, go to .config/nvim/ and compile source files"
@@ -57,7 +58,7 @@ install_neovim() {
 echo "Install dependency..."
 init
 if ! exists wget ; then sudo zypper install git wget curl; fi
-if ! exists go ; then install_go; fi
+#if ! exists go ; then install_go; fi
 if ! exists python3 ; then install_py3; fi
 if ! exists ruby ; then install_ruby; fi
 if ! exists nvim ; then install_neovim; fi
@@ -67,6 +68,6 @@ if [ -f "$HOME/.bashrc" ] ;
 then
 	# copy alias files
 	echo 'test -s ~/.bash_alias && . ~/.bash_alias || true' >> "$HOME/.bashrc"
-	ln -s "$(readlink -f "$(pwd)/../bash")/bash_alias" "$HOME/.bash_alias"
+	ln -nfs "$(readlink -f "$(pwd)/../bash")/bash_alias" "$HOME/.bash_alias"
 	source "$HOME/.bashrc"
 fi
