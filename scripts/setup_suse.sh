@@ -37,6 +37,7 @@ install_ruby() {
 }
 
 install_neovim() {
+	CUR=`pwd`
 	sudo zypper install libtool autoconf automake cmake gcc-c++
 	sudo zypper install python3-devel python-devel
 	# build from source
@@ -51,7 +52,7 @@ install_neovim() {
 	# for YCM
 	sudo pip install neovim
 	echo "To use YCM, go to .config/nvim/ and compile source files"
-	cd ..
+	cd "$CUR" 
 }
 
 
