@@ -30,7 +30,8 @@ Plug 'vim-scripts/CSApprox'
 Plug 'mbbill/undotree'
 Plug 'majutsushi/tagbar'
 Plug 'scrooloose/syntastic'
-Plug 'Valloric/YouCompleteMe'
+" Plug 'Valloric/YouCompleteMe'
+Plug 'Shougo/deoplete.nvim'
 " Golang Plugs
 Plug 'fatih/vim-go'
 " Python Plugs
@@ -300,6 +301,8 @@ noremap <Leader>gb :Gblame<CR>
 noremap <Leader>gd :Gvdiff<CR>
 " noremap <Leader>gr :Gremove<CR>
 
+"-------------------------Deoplete--------------------------
+let g:deoplete#enable_at_startup = 1
 
 "*****************************************************************************
 "" Languages config
