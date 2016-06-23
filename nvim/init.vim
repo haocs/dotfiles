@@ -41,8 +41,8 @@ Plug 'Yggdroot/indentLine'
 " colors
 " Some themes working for neovim.
 Plug 'tomasr/molokai'
-Plug 'freeo/vim-kalisi'
-Plug 'morhetz/gruvbox'
+"Plug 'freeo/vim-kalisi'
+" Plug 'morhetz/gruvbox'
 
 call plug#end()
 
@@ -177,7 +177,7 @@ cmap w!! w !sudo tee > /dev/null %
 
 " Use system clipboard with yank and paste
 if executable("xclip")
-	set clipboard+=unnamedplus
+  set clipboard+=unnamedplus
 endif
 
 "*****************************************************************************
@@ -335,6 +335,7 @@ augroup vimrc-python
 
   " Run current py file
   au FileType python nnoremap <buffer> <F5> :exec '!python3' shellescape(@%, 1)<CR>
+  let g:jedi#force_py_version=3
 augroup END
 
 " jedi-vim
