@@ -55,6 +55,13 @@ install_neovim() {
 	cd "$CUR" 
 }
 
+install_chrome() {
+	sudo zypper ar http://dl.google.com/linux/chrome/rpm/stable/x86_64 Google-Chrome
+	sudo zypper ref
+	sudo zypper in google-chrome-stable
+}
+export -f install_chrome
+
 
 echo "Install dependency..."
 init
@@ -72,3 +79,7 @@ then
 	ln -nfs "$(readlink -f "$(pwd)/../bash")/bash_alias" "$HOME/.bash_alias"
 	source "$HOME/.bashrc"
 fi
+
+echo "\n To Install:" 
+echo "chrome: sudo install_chrome"
+
