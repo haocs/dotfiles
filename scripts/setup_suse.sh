@@ -60,7 +60,6 @@ install_chrome() {
 	sudo zypper ref
 	sudo zypper in google-chrome-stable
 }
-export -f install_chrome
 
 
 echo "Install dependency..."
@@ -80,6 +79,8 @@ then
 	source "$HOME/.bashrc"
 fi
 
-echo "\n To Install:" 
-echo "chrome: sudo install_chrome"
+
+export -f install_chrome
+echo "Optional Install:" 
+echo "chrome: install_chrome"
 
