@@ -32,6 +32,14 @@ install_py3() {
 	sudo pip install jedi
 }
 
+install_nodejs() {
+	NODEJS_APT_ROOT="node_4.x"
+	NODEJS_VERSION="4.2.4"
+    curl https://deb.nodesource.com/${NODEJS_APT_ROOT}/pool/main/n/nodejs/nodejs_${NODEJS_VERSION}-1nodesource1~jessie1_amd64.deb > node.deb && \
+      dpkg -i node.deb && \
+      rm node.deb && \
+}
+
 install_ruby() {
 	gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
 	\curl -sSL https://get.rvm.io | bash -s stable --ruby
@@ -58,6 +66,7 @@ if ! exists wget ; then sudo apt-get -y install wget curl; fi
 if ! exists go ; then install_go; fi
 if ! exists python ; then sudo apt-get install python; fi
 if ! exists pip; then install_py3; fi
+if ! exists node; then install_nodejs; fi
 if ! exists ruby ; then install_ruby; fi
 if ! exists nvim ; then install_neovim; fi
 
