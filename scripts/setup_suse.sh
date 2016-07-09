@@ -52,7 +52,7 @@ install_neovim() {
 	# for YCM
 	sudo pip install neovim
 	echo "To use YCM, go to .config/nvim/ and compile source files"
-	cd "$CUR" 
+	cd "$CUR"
 }
 
 install_chrome() {
@@ -60,14 +60,11 @@ install_chrome() {
 	sudo zypper ref
 	sudo zypper in google-chrome-stable
 }
-export -f install_chrome
 
 install_devtools() {
 	sudo zypper in docker
 	sudo usermod -aG docker $USER
 }
-export -f install_devtools
-
 
 echo "Install dependency..."
 init
@@ -86,7 +83,9 @@ then
 	source "$HOME/.bashrc"
 fi
 
-echo "\n To Install:" 
-echo "chrome: sudo install_chrome"
+export -f install_chrome
+export -f install_devtools
+echo "Optional Install:"
+echo "chrome: install_chrome"
 echo "dev tools: sudo install_devtools"
 
