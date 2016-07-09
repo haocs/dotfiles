@@ -10,7 +10,7 @@ init() {
 
 install_go() {
 	# Install to ~/.local/bin
-	url="https://storage.googleapis.com/golang/go1.5.linux-amd64.tar.gz"
+	url="https://storage.googleapis.com/golang/go1.6.linux-amd64.tar.gz"
 	wget -qO- "$url" | tar -zxv -C "$HOME/.local/bin"
 	# Set Gopath
 	if [ -f "$HOME/.bashrc" ] ;
@@ -69,8 +69,8 @@ install_devtools() {
 echo "Install dependency..."
 init
 if ! exists wget ; then sudo zypper install git wget curl; fi
-#if ! exists go ; then install_go; fi
-if ! exists python3 ; then install_py3; fi
+if ! exists go ; then install_go; fi
+if ! exists pip; then install_py3; fi
 if ! exists ruby ; then install_ruby; fi
 if ! exists nvim ; then install_neovim; fi
 

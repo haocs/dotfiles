@@ -4,10 +4,13 @@ exists() {
 	type "$1" > /dev/null 2>&1;
 }
 
-install_go() {
-	# Install to local
+init() {
 	if [ ! -d "$HOME/.local/bin" ]; then mkdir -p "$HOME/.local/bin"; fi
-	url="https://storage.googleapis.com/golang/go1.5.linux-amd64.tar.gz"
+}
+
+install_go() {
+	# Install to ~/.local/bin
+	url="https://storage.googleapis.com/golang/go1.6.linux-amd64.tar.gz"
 	wget -qO- "$url" | tar -zxv -C "$HOME/.local/bin"
 	# Set Gopath
 	if [ -f "$HOME/.bashrc" ] ;
@@ -24,7 +27,9 @@ install_py3() {
 	pip_url="https://bootstrap.pypa.io/get-pip.py"
 	wget -qO- "$pip_url" | sudo python
 	wget -qO- "$pip_url" | sudo python3
-	sduo pip install pylint
+
+	sudo pip install pylint
+	sudo pip install jedi
 }
 
 install_ruby() {
@@ -33,19 +38,26 @@ install_ruby() {
 }
 
 install_neovim() {
-    sudo add-apt-repository ppa:neovim-ppa/unstable
-	sudo apt-get update
-	sudo apt-get install neovim
-	# To use system clipboard in neovim
-	sudo apt-get install xclip
+	CUR=`pwd`
+	sudo apt-get install libtool libtool-bin autoconf automake cmake g++ pkg-config unzip
+	# build from source
+	git clone https://github.com/neovim/neovim.git
+	cd neovim
+	rm -r build
+	make clean
+	sudo make CMAKE_BUILD_TYPE=Release
+	sudo make install
+	cd "$CUR"
+	# Install py client for neovim
+	sudo pip install neovim
 }
 
 echo "Install dependency..."
+init
 if ! exists wget ; then sudo apt-get -y install wget curl; fi
-
 if ! exists go ; then install_go; fi
 if ! exists python ; then sudo apt-get install python; fi
-if ! exists python3 ; then install_py3; fi
+if ! exists pip; then install_py3; fi
 if ! exists ruby ; then install_ruby; fi
 if ! exists nvim ; then install_neovim; fi
 
@@ -57,3 +69,4 @@ then
 	ln -nfs "$(readlink -f "$(pwd)/../bash")/bash_alias" "$HOME/.bash_alias"
 	source "$HOME/.bashrc"
 fi
+
