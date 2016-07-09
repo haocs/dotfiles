@@ -62,6 +62,12 @@ install_chrome() {
 }
 export -f install_chrome
 
+install_devtools() {
+	sudo zypper in docker
+	sudo usermod -aG docker $USER
+}
+export -f install_devtools
+
 
 echo "Install dependency..."
 init
@@ -82,4 +88,5 @@ fi
 
 echo "\n To Install:" 
 echo "chrome: sudo install_chrome"
+echo "dev tools: sudo install_devtools"
 
