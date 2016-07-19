@@ -32,6 +32,7 @@ Plug 'majutsushi/tagbar'
 Plug 'scrooloose/syntastic'
 " Plug 'Valloric/YouCompleteMe'
 Plug 'Shougo/deoplete.nvim'
+Plug 'editorconfig/editorconfig-vim'
 " Golang Plugs
 Plug 'fatih/vim-go'
 " Python Plugs
