@@ -32,11 +32,8 @@ install_py3() {
 }
 
 install_nodejs() {
-	NODEJS_APT_ROOT="node_4.x"
-	NODEJS_VERSION="4.2.4"
-    curl https://deb.nodesource.com/${NODEJS_APT_ROOT}/pool/main/n/nodejs/nodejs_${NODEJS_VERSION}-1nodesource1~jessie1_amd64.deb > node.deb && \
-      dpkg -i node.deb && \
-      rm node.deb && \
+	NODEJS_VERSION="-6.3.0-113.1.x86_64"
+	sudo zypper install nodejs
 }
 
 install_ruby() {
