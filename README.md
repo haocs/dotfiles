@@ -9,7 +9,7 @@
 * Bash
 * Neovim and vim
 * Git
-* Dev Languages and Tools: py, ruby, go
+* Dev Languages and Tools: py, ruby, go, nodejs
 
 ### How to use
 ``` bash
@@ -31,7 +31,7 @@ Dockerfile is built for deb and it's easy to create one for openSUSE
 docker build -t 'dotfile' ./
 docker run -it dotfile
 # inside docker container
-cd dotfiles/scripts
+cd ./.dotfiles/scripts
 ./test_deb.sh
 ```
 If everything goes well, you dotfile is ready :)
