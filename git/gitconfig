@@ -16,10 +16,15 @@
 	df = diff
 	dif = diff
 	co = checkout
-	c = commit
-	cmt = commit -v
-	acmt = commit -a -v
+	br = branch
+	ci = commit
+	cmt = commit -m
+	acmt = commit -a -m
+
 # Show log in a compact way
 	l = log --graph --oneline --decorate
+    hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
 # Diff file with cached version(Diff after file been added)
 	dfc = diff --cached
+# Check remote details
+	rmt = remote -v
