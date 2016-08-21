@@ -1,0 +1,12 @@
+# weahter cmd :)
+weather() {
+	URL="http://wttr.in/"
+	LOC="Bellevue"
+	if [ $# -eq 1 ]; then
+		LOC="$@"
+	fi
+	curl -4 "$URL$LOC"
+}
+export -f weather
+
+# scan $HOME/.commands folder and make each *.sh file as a command
