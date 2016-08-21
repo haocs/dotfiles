@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 INSTALL_TO="$HOME/.config/nvim"
 S_DIR=$(readlink -f "$(pwd)/../nvim")

@@ -1,4 +1,5 @@
-#!/bin/sh
+#!/usr/bin/env bash
+
 INSTALL_TO="$HOME"
 S_DIR=$(readlink -f "$(pwd)/../git")
 
