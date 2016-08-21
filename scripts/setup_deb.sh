@@ -1,4 +1,9 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+RED='\e[0;31m'
+YELLOW='\e[1;33m'
+BLUE='\e[0;34m'
+NC='\e[0m' # No Color
 
 exists() {
 	type "$1" > /dev/null 2>&1;
@@ -68,12 +73,23 @@ if ! exists node; then install_nodejs; fi
 if ! exists ruby ; then install_ruby; fi
 if ! exists nvim ; then install_neovim; fi
 
-# Update Configs
-if [ -f "$HOME/.bashrc" ] ;
-then
-	# copy alias files
-	echo 'test -s ~/.bash_alias && . ~/.bash_alias || true' >> "$HOME/.bashrc"
-	ln -nfs "$(readlink -f "$(pwd)/../bash")/bash_alias" "$HOME/.bash_alias"
-	source "$HOME/.bashrc"
-fi
+load_configs() {
+	# load git, nvim and bash configs
+	source ./config_git.sh
+	source ./config_nvim.sh
+	source ./config_bash.sh
+}
 
+echo "Install dependency..."
+init
+if ! exists wget ; then sudo zypper install git wget curl; fi
+if ! exists go ; then install_go; fi
+if ! exists pip; then install_py3; fi
+if ! exists node; then install_nodejs; fi
+if ! exists ruby ; then install_ruby; fi
+if ! exists nvim ; then install_neovim; fi
+
+export -f load_configs
+
+echo -e "${BLUE}Optional Commands:"
+echo -e "${BLUE}setup: ${YELLOW}load_configs"
