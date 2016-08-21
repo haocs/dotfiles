@@ -16,12 +16,13 @@
 # get git first
 git clone https://github.com/haocs/dotfiles.git
 cd dotfiles/scripts
-# For deb
-sudo . ./setup_deb.sh
-# For suse
-#sudo . ./setup_suse.sh
-./config_git.sh
+# change git config
+# ./config_git.sh
 ./config_nvim.sh
+# For deb
+./setup_deb.sh
+# For suse
+./setup_suse.sh
 ```
 
 ### Test?
