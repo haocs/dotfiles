@@ -1,6 +1,6 @@
 [user]
 	name = Hao Chen
-	email = hach@microsoft.com
+	email = c@haoc.io
 
 [core]
 	editor = vim
@@ -21,10 +21,12 @@
 	cmt = commit -m
 	acmt = commit -a -m
 
-# Show log in a compact way
+	# Show log in a compact way
 	l = log --graph --oneline --decorate
-    hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
-# Diff file with cached version(Diff after file been added)
+    	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+	
+	# Diff file with cached version(Diff after file been added)
 	dfc = diff --cached
-# Check remote details
+	
+	# Check remote details
 	rmt = remote -v
