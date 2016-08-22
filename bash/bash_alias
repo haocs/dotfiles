@@ -19,15 +19,3 @@ if [ -e ~/.config/nvim/init.vim ]; then
 	alias vim="nvim"
 fi
 
-# A wrapper funciton for git with the following 2 behaviros:
-# 1. gt without parameters will execute "git status"
-# 2. gt parameteres will delegate work to git
-gt() {
-	if [ $# -eq 0 ]; then
-		git status
-	else
-		git "$@"
-	fi
-}
-export -f gt
-

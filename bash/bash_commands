@@ -9,4 +9,15 @@ weather() {
 }
 export -f weather
 
-# scan $HOME/.commands folder and make each *.sh file as a command
+# A wrapper funciton for git with the following 2 behaviros:
+# 1. gt without parameters will execute "git status"
+# 2. gt parameteres will delegate work to git
+gt() {
+	if [ $# -eq 0 ]; then
+		git status
+	else
+		git "$@"
+	fi
+}
+export -f gt
+
