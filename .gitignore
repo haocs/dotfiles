@@ -1,2 +1,2 @@
 # ignore build files
-scripts/neovim
+bin/neovim

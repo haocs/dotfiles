@@ -59,9 +59,8 @@ install_neovim() {
 	sudo make install
 	# ln syntax.vim for neovim. ONLY for SUSE
 	sudo ln -nfs /usr/share/vim/current /usr/local/share/nvim
-	# for YCM
+	# python client for neovim
 	sudo pip install neovim
-	echo "To use YCM, go to .config/nvim/ and compile source files"
 	cd "$CUR"
 }
 
