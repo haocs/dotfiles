@@ -11,6 +11,10 @@
 	diff = auto
 	status = auto
 
+[push]
+	# Only push current branch to remote
+	default = simple
+
 [alias]
 	st = status
 	df = diff
