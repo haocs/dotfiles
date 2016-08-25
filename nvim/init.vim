@@ -30,8 +30,7 @@ Plug 'vim-scripts/CSApprox'
 Plug 'mbbill/undotree'
 Plug 'majutsushi/tagbar'
 Plug 'scrooloose/syntastic'
-" Plug 'Valloric/YouCompleteMe'
-Plug 'Shougo/deoplete.nvim'
+Plug 'Shougo/deoplete.nvim' " auto complete
 Plug 'editorconfig/editorconfig-vim'
 " Golang Plugs
 Plug 'fatih/vim-go'
@@ -97,7 +96,7 @@ set showcmd
 set shell=/bin/sh
 
 " session management
-let g:session_directory = "~/.nvim/session"
+let g:session_directory = "$HOME/.nvim/session"
 let g:session_autoload = "no"
 let g:session_autosave = "no"
 let g:session_command_aliases = 1
@@ -130,10 +129,6 @@ else
   let g:CSApprox_loaded = 1
 
 endif
-
-" if &term =~ '256color'
-"   set t_ut=
-" endif
 
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
@@ -304,6 +299,8 @@ noremap <Leader>gd :Gvdiff<CR>
 
 "-------------------------Deoplete--------------------------
 let g:deoplete#enable_at_startup = 1
+" deoplete tab-complete
+inoremap <expr><tab> pumvisible() ? "\<c-n>" :"\<tab>"
 
 "*****************************************************************************
 "" Languages config
