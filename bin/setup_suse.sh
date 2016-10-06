@@ -29,6 +29,8 @@ install_go() {
 
 install_py3() {
 	sudo zypper install python3
+	sudo zypper install python3-pylint
+
 	pip_url="https://bootstrap.pypa.io/get-pip.py"
 	wget -qO- "$pip_url" | sudo python3
 
