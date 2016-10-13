@@ -1,12 +1,13 @@
-" ***************************************************************************
-""
+"***************************************************************************
 "" Hao`s NeoVim Config
-""
-"*****************************************************************************
+" ***************************************************************************
 
 "*****************************************************************************
 "" Plugin Setup
 "*****************************************************************************
+"
+let s:vim_config_dir=expand($HOME.'/.config/nvim')
+
 "Vim-Plug {
 let s:vim_plug_dir=expand($HOME.'/.config/nvim/autoload')
 
@@ -17,32 +18,11 @@ endif
 
 call plug#begin('$HOME/.config/nvim/plugged')
 
-Plug 'scrooloose/nerdtree'
-Plug 'tpope/vim-commentary'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'bronson/vim-trailing-whitespace'
-Plug 'tpope/vim-fugitive'
+Plug 'Shougo/unite.vim'
+Plug 'Shougo/neomru.vim'
 Plug 'airblade/vim-gitgutter'
-Plug 'sheerun/vim-polyglot' " Language packs
-Plug 'vim-scripts/CSApprox'
-Plug 'mbbill/undotree'
-Plug 'majutsushi/tagbar'
-Plug 'scrooloose/syntastic'
-Plug 'Shougo/deoplete.nvim' " auto complete
-Plug 'editorconfig/editorconfig-vim'
-" Golang Plugs
-Plug 'fatih/vim-go'
-" Python Plugs
-Plug 'davidhalter/jedi-vim'
-Plug 'Yggdroot/indentLine'
-
-" colors
-" Some themes working for neovim.
-Plug 'tomasr/molokai'
-"Plug 'freeo/vim-kalisi'
-" Plug 'morhetz/gruvbox'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'zchee/deoplete-jedi'
 
 call plug#end()
 
@@ -71,8 +51,6 @@ set softtabstop=0
 set shiftwidth=4
 set expandtab
 
-" Map leader to ,
-let mapleader=','
 
 " Enable hidden buffers
 set hidden
@@ -101,7 +79,6 @@ let g:session_autoload = "no"
 let g:session_autosave = "no"
 let g:session_command_aliases = 1
 
-
 "*****************************************************************************
 "" Visual Settings
 "*****************************************************************************
@@ -113,7 +90,6 @@ set number
 
 let no_buffers_menu=1
 set background=dark
-colors molokai
 
 set mousemodel=popup
 set cursorline
@@ -127,7 +103,6 @@ if has("gui_running")
   endif
 else
   let g:CSApprox_loaded = 1
-
 endif
 
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
@@ -149,10 +124,6 @@ set titlestring=%F
 
 set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
 
-if exists("*fugitive#statusline")
-  set statusline+=%{fugitive#statusline()}
-endif
-
 "*****************************************************************************
 "" Abbreviations
 "*****************************************************************************
@@ -168,17 +139,13 @@ cnoreabbrev W w
 cnoreabbrev Q q
 cnoreabbrev Qall qall
 
-" Allow saving of files as sudo when I forgot to start vim using sudo.
-cmap w!! w !sudo tee > /dev/null %
-
-" Use system clipboard with yank and paste
-if executable("xclip")
-  set clipboard+=unnamedplus
-endif
-
 "*****************************************************************************
 "" Mappings
 "*****************************************************************************
+
+" Map leader to ,
+let mapleader=','
+
 " Split
 noremap <Leader>h :<C-u>split<CR>
 noremap <Leader>v :<C-u>vsplit<CR>
@@ -206,164 +173,66 @@ noremap <leader>c :bd<CR>
 " Clean search (highlight)
 nnoremap <silent> <leader><space> :noh<cr>
 
-" Ctags
-map <F12> :! ctags -R .<cr>
-
 "*****************************************************************************
 "" Plugs  config
 "*****************************************************************************
-"
+" Unite {
+	" The prefix key.
+	nnoremap    [unite]   <Nop>
+	nmap    f [unite]
 
-"--------------------------- UndoTree -------------------------
-" Undotree persistent
-if has("persistent_undo")
-    set undodir=~/.undodir/
-    set undofile
-endif
+	call unite#filters#matcher_default#use(['matcher_fuzzy'])
+	nnoremap [unite]f :<C-u>Unite file_rec/neovim<CR>
+	nnoremap [unite]e :<C-u>Unite -no-split -buffer-name=mru file_mru<cr>
+	nnoremap [unite]b :<C-u>Unite -quick-match buffer<cr>
+	nnoremap [unite]r :<C-u>Unite -no-split -buffer-name=register register<CR>
 
-" UndoTree configuration
-nnoremap <F2> :UndotreeToggle<cr>
+	" Start insert.
+	call unite#custom#profile('default', 'context', {
+	\   'start_insert': 1
+	\ })
 
-"--------------------------- NERDTree ------------------------
-" NERDTree configuration
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
-let g:NERDTreeChDirMode=2
-let NERDTreeShowHidden=1
-let g:NERDTreeIgnore=['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__']
-"let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
-let g:NERDTreeShowBookmarks=1
-let g:nerdtree_tabs_focus_on_files=1
-let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
-let g:NERDTreeWinSize = 50
-" NERDTree KeyMapping
-" Locate current file in file systems
-nnoremap <silent> <F3> :NERDTreeFind<CR>
-noremap <F4> :NERDTreeToggle<CR>
-" Close NERDTree if no other window open
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+	autocmd FileType unite call s:unite_my_settings()
+	function! s:unite_my_settings()"{{{
+	  " Overwrite settings.
 
-"------------------------ vim-airline -------------------------
+	  imap <buffer> jj      <Plug>(unite_insert_leave)
+	  "imap <buffer> <C-w>     <Plug>(unite_delete_backward_path)
 
-let g:airline_theme = 'powerlineish'
-let g:airline#extensions#syntastic#enabled = 1
-let g:airline#extensions#branch#enabled = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tagbar#enabled = 1
+	  imap <buffer><expr> j unite#smart_map('j', '')
+	  imap <buffer> <TAB>   <Plug>(unite_select_next_line)
+	  imap <buffer> <C-w>     <Plug>(unite_delete_backward_path)
+	  imap <buffer> '     <Plug>(unite_quick_match_default_action)
+	  nmap <buffer> '     <Plug>(unite_quick_match_default_action)
+	  imap <buffer><expr> x
+	          \ unite#smart_map('x', "\<Plug>(unite_quick_match_jump)")
+	  nmap <buffer> x     <Plug>(unite_quick_match_jump)
+	  nmap <buffer> <C-z>     <Plug>(unite_toggle_transpose_window)
+	  imap <buffer> <C-z>     <Plug>(unite_toggle_transpose_window)
+	  nmap <buffer> <C-j>     <Plug>(unite_toggle_auto_preview)
+	  nmap <buffer> <C-r>     <Plug>(unite_narrowing_input_history)
+	  imap <buffer> <C-r>     <Plug>(unite_narrowing_input_history)
+	  nnoremap <silent><buffer><expr> l
+	          \ unite#smart_map('l', unite#do_action('default'))
 
-"------------------------- ctrip.vim -------------------------
-set wildmode=list:longest,list:full
-set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__
-let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist)|(\.(swp|tox|ico|git|hg|svn))$'
-let g:ctrlp_user_command = "find %s -type f | grep -Ev '"+ g:ctrlp_custom_ignore +"'"
-let g:ctrlp_use_caching = 0
-let g:ctrlp_map = '<leader>e'
-let g:ctrlp_open_new_file = 'r'
-" ctrip.vim KeyMapping
-cnoremap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
-noremap <leader>b :CtrlPBuffer<CR>
-" Opens an edit command with the path of the currently edited file filled in
-noremap <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
-" Opens a tab edit command with the path of the currently edited file filled
-noremap <Leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
+	  let unite = unite#get_current_unite()
+	  if unite.profile_name ==# 'search'
+	    nnoremap <silent><buffer><expr> r     unite#do_action('replace')
+	  else
+	    nnoremap <silent><buffer><expr> r     unite#do_action('rename')
+	  endif
+
+	  nnoremap <silent><buffer><expr> cd     unite#do_action('lcd')
+	  nnoremap <buffer><expr> S      unite#mappings#set_current_sorters(
+	          \ empty(unite#mappings#get_current_sorters()) ?
 
 
-"-------------------------syntastic--------------------------
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_error_symbol='✗'
-let g:syntastic_warning_symbol='⚠'
-let g:syntastic_style_error_symbol = 's✗'
-let g:syntastic_style_warning_symbol = 's⚠'
-let g:syntastic_auto_loc_list=1
-let g:syntastic_aggregate_errors = 1
-let g:syntastic_always_populate_loc_list=1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_python_checkers = ['pylint', 'python']
-" let g:syntastic_python_checkers=['python', 'flake8']
-" let g:syntastic_python_flake8_post_args='--ignore=W391'
+	  " Runs "split" action by <C-s>.
+	  imap <silent><buffer><expr> <C-s>     unite#do_action('split')
+	endfunction"}}}
+" }
 
-" syntastic Keymappings
-" noremap <silent> <F7> :SyntasticCheck<CR>
-noremap <silent> <F8> :SyntasticToggleMode<CR>
-
-"-------------------------Git--------------------------
-" noremap <Leader>ga :Gwrite<CR>
-" noremap <Leader>gc :Gcommit<CR>
-" noremap <Leader>gsh :Gpush<CR>
-" noremap <Leader>gll :Gpull<CR>
-noremap <Leader>gs :Gstatus<CR>
-noremap <Leader>gb :Gblame<CR>
-noremap <Leader>gd :Gvdiff<CR>
-" noremap <Leader>gr :Gremove<CR>
-
-"-------------------------Deoplete--------------------------
-let g:deoplete#enable_at_startup = 1
-" deoplete tab-complete
-inoremap <expr><tab> pumvisible() ? "\<c-n>" :"\<tab>"
-
-"*****************************************************************************
-"" Languages config
-"*****************************************************************************
-" Tagbar
-nmap <silent> <F6> :TagbarToggle<CR>
-let g:tagbar_autofocus = 1
-
-let g:tagbar_type_go = {
-    \ 'ctagstype' : 'go',
-    \ 'kinds'     : [  'p:package', 'i:imports:1', 'c:constants', 'v:variables',
-        \ 't:types',  'n:interfaces', 'w:fields', 'e:embedded', 'm:methods',
-        \ 'r:constructor', 'f:functions' ],
-    \ 'sro' : '.',
-    \ 'kind2scope' : { 't' : 'ctype', 'n' : 'ntype' },
-    \ 'scope2kind' : { 'ctype' : 't', 'ntype' : 'n' },
-    \ 'ctagsbin'  : 'gotags',
-    \ 'ctagsargs' : '-sort -silent'
-    \ }
-
-" python
-"" Custom configs
-
-" vim-python
-augroup vimrc-python
-  autocmd!
-  autocmd FileType python setlocal expandtab shiftwidth=4 tabstop=8 colorcolumn=79
-      \ formatoptions+=croq softtabstop=4 smartindent
-      \ cinwords=if,elif,else,for,while,try,except,finally,def,class,with
-
-  " Run current py file
-  au FileType python nnoremap <buffer> <F5> :exec '!python3' shellescape(@%, 1)<CR>
-  let g:jedi#force_py_version=3
-augroup END
-
-" jedi-vim
-let g:jedi#popup_on_dot = 0
-let g:jedi#goto_assignments_command = "<leader>g"
-let g:jedi#goto_definitions_command = "<leader>d"
-let g:jedi#documentation_command = "K"
-let g:jedi#usages_command = "<leader>n"
-let g:jedi#rename_command = "<leader>r"
-let g:jedi#show_call_signatures = "0"
-let g:jedi#completions_command = "<C-Space>"
-let g:jedi#smart_auto_mappings = 0
-
-
-" vim-go
-augroup FileType go
-" Golang
-au FileType go nmap <leader>r <Plug>(go-run)
-au FileType go nmap <leader>b <Plug>(go-build)
-au FileType go nmap <leader>t <Plug>(go-test)
-au FileType go nmap <leader>c <Plug>(go-coverage)
-" check def
-au FileType go nmap <Leader>ds <Plug>(go-def-split)
-au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
-au FileType go nmap <Leader>dt <Plug>(go-def-tab)
-" check go doc
-au FileType go nmap <Leader>gd <Plug>(go-doc)
-au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
-" who has implemented
-au FileType go nmap <Leader>s <Plug>(go-implements)
-" show type info for the wordh
-au FileType go nmap <Leader>i <Plug>(go-info)
-augroup END
+" deoplete { 
+	let g:deoplete#enable_at_startup = 1
+	let g:deoplete#enable_smart_case = 1
+" }
