@@ -52,8 +52,8 @@ install_neovim() {
 	CUR=`pwd`
 	sudo zypper install libtool autoconf automake cmake gcc-c++
 	sudo zypper install python3-devel python-devel
-	# build from source
-	git clone https://github.com/neovim/neovim.git
+	# build from source(my fork)
+	git clone https://github.com/haocs/neovim.git
 	cd neovim
 	rm -r build
 	make clean
