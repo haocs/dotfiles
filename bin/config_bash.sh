@@ -1,22 +1,32 @@
 #!/usr/bin/env bash
 
 INSTALL_TO="$HOME"
-S_DIR=$(readlink -f "$(pwd)/../bash")
+S_DIR="$HOME/.dotfiles/bash"
 
-if [ ! -f "$INSTALL_TO/.bash_profile" ]; then
-	echo "Create .bash_profile"
-	ln -s "$S_DIR/bash_profile" "$INSTALL_TO/.bash_profile"
-fi
+clean() {
+  FILE="$1"
+  if [ -L "$FILE" ]; then
+    echo "rm old symlink: `ls "$FILE"`"
+    rm "$FILE"
+  fi
+  if [ ! -f "$FILE" ]; then
+    echo "create file: $FILE"
+    touch "$FILE"
+  fi
+}
 
-if [ -f "$INSTALL_TO/.bashrc" ]; then
-	echo "Config .bashrc"
-	# copy alias files
-	echo 'test -s ~/.bash_alias && . ~/.bash_alias || true' >> "$INSTALL_TO/.bashrc"
-	ln -nfs "$(readlink -f "$(pwd)/../bash")/bash_alias" "$INSTALL_TO/.bash_alias"
-	# copy commands files
-	echo 'test -s ~/.bash_commands && . ~/.bash_commands || true' >> "$INSTALL_TO/.bashrc"
-	ln -nfs "$(readlink -f "$(pwd)/../bash")/bash_commands" "$INSTALL_TO/.bash_commands"
+clean "$INSTALL_TO/.bash_profile"
+clean "$INSTALL_TO/.bashrc"
 
-	# Update .config
-	source "$INSTALL_TO/.bashrc"
-fi
+# reference bashrc in bash_profile
+echo 'test -s ~/.bashrc && . ~/.bashrc || true' >> "$INSTALL_TO/.bash_profile"
+# copy alias files
+echo 'test -s ~/.bash_alias && . ~/.bash_alias || true' >> "$INSTALL_TO/.bashrc"
+ln -nfs "$S_DIR/bash_alias" "$INSTALL_TO/.bash_alias"
+# copy commands files
+echo 'test -s ~/.bash_commands && . ~/.bash_commands || true' >> "$INSTALL_TO/.bashrc"
+ln -nfs "$S_DIR/bash_commands" "$INSTALL_TO/.bash_commands"
+
+echo "update .bashrc config"
+source "$INSTALL_TO/.bashrc"
+

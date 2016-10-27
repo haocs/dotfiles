@@ -6,11 +6,11 @@ BLUE='\e[0;34m'
 NC='\e[0m' # No Color
 
 exists() {
-	type "$1" > /dev/null 2>&1;
+  type "$1" > /dev/null 2>&1;
 }
 
 init() {
-	if [ ! -d "$HOME/.local/bin" ]; then mkdir -p "$HOME/.local/bin"; fi
+  if [ ! -d "$HOME/.local/bin" ]; then mkdir -p "$HOME/.local/bin"; fi
 }
 
 install_go() {
@@ -29,13 +29,13 @@ install_go() {
 
 install_py3() {
 	sudo zypper install python3
-	sudo zypper install python3-pylint
+	sudo zypper install python3-devel
 
 	pip_url="https://bootstrap.pypa.io/get-pip.py"
 	wget -qO- "$pip_url" | sudo python3
 
 	sudo pip install jedi
-	sudo pip install python3-devel
+	sudo pip install python3-pylint
 }
 
 install_nodejs() {
@@ -86,7 +86,8 @@ load_configs() {
 
 echo "Install dependency..."
 init
-if ! exists wget ; then sudo zypper install git wget curl; fi
+if ! exists wget ; then sudo zypper in wget; fi
+if ! exists curl ; then sudo zypper in curl; fi
 if ! exists go ; then install_go; fi
 if ! exists pip; then install_py3; fi
 if ! exists node; then install_nodejs; fi

@@ -1,14 +1,3 @@
-# weahter cmd :)
-weather() {
-	URL="http://wttr.in/"
-	LOC="Bellevue"
-	if [ $# -eq 1 ]; then
-		LOC="$@"
-	fi
-	curl -4 "$URL$LOC"
-}
-export -f weather
-
 # A wrapper funciton for git with the following 2 behaviros:
 # 1. gt without parameters will execute "git status"
 # 2. gt parameteres will delegate work to git

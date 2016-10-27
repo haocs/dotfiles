@@ -1,5 +1,4 @@
 # List commands
-alias ls='ls --color=auto'
 alias ll="ls -alh"
 alias l.='ls -d .*'
 
