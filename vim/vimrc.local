@@ -1,3 +1,0 @@
-"" Local Configs
-:set cursorcolumn
-:highlight CursorColumn guibg=#404040
