@@ -31,7 +31,8 @@ echo 'test -s ~/.bash_alias && . ~/.bash_alias || true' >> "$DES_DIR/.bashrc"
 echo '' >> "$DES_DIR/.bashrc"
 
 echo '# refernece bash commands' >> "$DES_DIR/.bashrc"
-echo 'PATH=$PATH:~/.bash_commands' >> "$DES_DIR/.bashrc"
+echo 'export PATH=$PATH:~/.bash_commands' >> "$DES_DIR/.bashrc"
+echo 'export PATH=$PATH:~/.bash_commands/local' >> "$DES_DIR/.bashrc"
 echo '' >> "$DES_DIR/.bashrc"
 
 echo '# config prompt' >> "$DES_DIR/.bashrc"
