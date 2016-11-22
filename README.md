@@ -25,5 +25,3 @@ source ./setup_suse.sh
 # For macos
 source ./setup_darwin.sh
 ```
-
-
