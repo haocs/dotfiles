@@ -1,11 +1,19 @@
-
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" Neovim config
+"" Author: Hao
+"" Email: git@haoc.io
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 "" Basic {
   " Dir {
     set undodir=~/.undo//
     set undofile
-    set backupdir=~/.backup//
-    set directory=~/.swp//
+    set nobackup
+    set noswapfile
+    " set backupdir=~/.backup//
+    " set backupext=~bk
+    " set writebackup
+    " set directory=~/.swp//
   " }
 
   " Encoding {
@@ -41,13 +49,14 @@
 "" }
 
 "" Visual {
-  " let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
   " Basic {
     set nolinebreak               " don't wrap at words, messes up copying
     set visualbell
     set wildmode=longest,list,full
     set wildmenu
+    set numberwidth=3        " minimun width to use for the number column.
   " }
 
   " Syntax {
@@ -171,8 +180,95 @@
     endif
   " }
 
+  " NERDTree {
+      set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
+      let g:NERDTreeChDirMode=2
+      let NERDTreeShowHidden=1
+      let g:NERDTreeIgnore=['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__']
+      "let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
+      let g:NERDTreeShowBookmarks=1
+      let g:nerdtree_tabs_focus_on_files=1
+      let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
+      let g:NERDTreeWinSize=30
+
+      " NERDTree KeyMapping
+      " Locate current file in file systems
+      nnoremap <silent> <lead>l :NERDTreeFind<CR>
+      noremap <F2> :NERDTreeToggle<CR>
+      " Close NERDTree if no other window open
+      autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+  " }
+
+  "
+  " vim-commentray {
+      " to support other file type
+      " autocmd FileType apache setlocal commentstring=#\ %s
+  " }
+
   " Color-thems {
       colorscheme molokai
       set background=dark
   " }
+
+  " Unite {
+      " The prefix key.
+      nnoremap    [unite]   <Nop>
+      nmap    f [unite]
+
+      call unite#filters#matcher_default#use(['matcher_fuzzy'])
+      nnoremap [unite]f :<C-u>Unite file_rec/neovim<CR>
+      nnoremap [unite]e :<C-u>Unite -no-split -buffer-name=mru file_mru<cr>
+      nnoremap [unite]b :<C-u>Unite -quick-match buffer<cr>
+      nnoremap [unite]r :<C-u>Unite -no-split -buffer-name=register register<CR>
+
+      " Start insert.
+      call unite#custom#profile('default', 'context', {
+      \   'start_insert': 1
+      \ })
+
+      autocmd FileType unite call s:unite_my_settings()
+      function! s:unite_my_settings()"{{{
+        " Overwrite settings.
+
+        imap <buffer> jj      <Plug>(unite_insert_leave)
+        "imap <buffer> <C-w>     <Plug>(unite_delete_backward_path)
+
+        imap <buffer><expr> j unite#smart_map('j', '')
+        imap <buffer> <TAB>   <Plug>(unite_select_next_line)
+        imap <buffer> <C-w>     <Plug>(unite_delete_backward_path)
+        imap <buffer> '     <Plug>(unite_quick_match_default_action)
+        nmap <buffer> '     <Plug>(unite_quick_match_default_action)
+        imap <buffer><expr> x
+                \ unite#smart_map('x', "\<Plug>(unite_quick_match_jump)")
+        nmap <buffer> x     <Plug>(unite_quick_match_jump)
+        nmap <buffer> <C-z>     <Plug>(unite_toggle_transpose_window)
+        imap <buffer> <C-z>     <Plug>(unite_toggle_transpose_window)
+        nmap <buffer> <C-j>     <Plug>(unite_toggle_auto_preview)
+        nmap <buffer> <C-r>     <Plug>(unite_narrowing_input_history)
+        imap <buffer> <C-r>     <Plug>(unite_narrowing_input_history)
+        nnoremap <silent><buffer><expr> l
+                \ unite#smart_map('l', unite#do_action('default'))
+
+        let unite = unite#get_current_unite()
+        if unite.profile_name ==# 'search'
+          nnoremap <silent><buffer><expr> r     unite#do_action('replace')
+        else
+          nnoremap <silent><buffer><expr> r     unite#do_action('rename')
+        endif
+
+        nnoremap <silent><buffer><expr> cd     unite#do_action('lcd')
+        nnoremap <buffer><expr> S      unite#mappings#set_current_sorters(
+                \ empty(unite#mappings#get_current_sorters()) ?
+
+
+        " Runs "split" action by <C-s>.
+        imap <silent><buffer><expr> <C-s>     unite#do_action('split')
+      endfunction"}}}
+  " }
+
+  " deoplete {
+      let g:deoplete#enable_at_startup = 1
+      let g:deoplete#enable_smart_case = 1
+  " }
+
 "" }
