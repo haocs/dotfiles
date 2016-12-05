@@ -2,9 +2,10 @@
 
 "" Basic {
   " Dir {
-    set undodir=~/.config/nvim/.undo//
-    set backupdir=~/.config/nvim/.backup//
-    set directory=~/.config/nvim/.swp//
+    set undodir=~/.undo//
+    set undofile
+    set backupdir=~/.backup//
+    set directory=~/.swp//
   " }
 
   " Encoding {
@@ -40,7 +41,7 @@
 "" }
 
 "" Visual {
-  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  " let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
   " Basic {
     set nolinebreak               " don't wrap at words, messes up copying
@@ -141,21 +142,18 @@
 
       Plug 'Shougo/unite.vim'
       Plug 'Shougo/neomru.vim'
-      Plug 'airblade/vim-gitgutter'
       Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
       Plug 'zchee/deoplete-jedi'
-      Plug 'xolox/vim-session'
-      Plug 'xolox/vim-misc'
       Plug 'mbbill/undotree'
       Plug 'scrooloose/nerdtree'
+      Plug 'airblade/vim-gitgutter'
       Plug 'tpope/vim-commentary'
 
-      Plug 'bronson/vim-trailing-whitespace'
       Plug 'sheerun/vim-polyglot' " Language packs
-      Plug 'majutsushi/tagbar'
       Plug 'scrooloose/syntastic'
+      Plug 'majutsushi/tagbar'
+      Plug 'bronson/vim-trailing-whitespace'
       Plug 'editorconfig/editorconfig-vim'
-
       Plug 'Yggdroot/indentLine'
 
       " Color thems
@@ -173,15 +171,8 @@
     endif
   " }
 
-  " Vim-session {
-    let g:session_directory = "~/.config/nvim/.session"
-    let g:session_autoload = "no"
-    let g:session_autosave = "no"
-    let g:session_command_aliases = 1
-  " }
-
   " Color-thems {
-      colorscheme kalisi
+      colorscheme molokai
       set background=dark
   " }
 "" }
