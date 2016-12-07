@@ -3,7 +3,7 @@
 INSTALL_TO="$HOME/.config/nvim"
 S_DIR="$HOME/.dotfiles/nvim"
 
-install_vimrc () {
+config_nvim() {
   if [ -e "$INSTALL_TO/init.vim" ]; then
     echo "init.vim exists will make it init.vim_bk"
     mv "$INSTALL_TO/init.vim" "$INSTALL_TO/init.vim_vk"
@@ -19,4 +19,4 @@ install_vimrc () {
   echo "Installed and configured nvim."
 }
 
-install_vimrc
+config_nvim

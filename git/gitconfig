@@ -1,37 +1,37 @@
 [user]
-	name = Hao Chen
-	email = git@haoc.io
+    name = Hao Chen
+    email = git@haoc.io
 
 [core]
-	editor = vim
+    editor = vim
 
 [color]
-	ui = auto
-	branch = auto
-	diff = auto
-	status = auto
+    ui = auto
+    branch = auto
+    diff = auto
+    status = auto
 
 [push]
-	# Only push current branch to remote
-	default = simple
+    # Only push current branch to remote
+    default = simple
 
 [alias]
-	st = status
-	ts = status
-	df = diff
-	dif = diff
-	co = checkout
-	br = branch
-	ci = commit
-	cmt = commit -m
-	acmt = commit -a -m
+    st = status
+    ts = status
+    df = diff
+    dif = diff
+    co = checkout
+    br = branch
+    ci = commit
+    cmt = commit -m
+    acmt = commit -a -m
 
-	# Show log in a nicer way
-    	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
-	l = log --graph --format='format:%C(yellow)%h%C(reset) %C(blue)\"%an\" <%ae>%C(reset) %C(magenta)%cr%C(reset)%C(auto)%d%C(reset)%n%s' --date-order
-	
-	# Diff file with cached version(Diff after file been added)
-	dfc = diff --cached
-	
-	# Check remote details
-	rmt = remote -v
+    # Show log in a nicer way
+        hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+    l = log --graph --format='format:%C(yellow)%h%C(reset) %C(blue)\"%an\" <%ae>%C(reset) %C(magenta)%cr%C(reset)%C(auto)%d%C(reset)%n%s' --date-order
+
+    # Diff file with cached version(Diff after file been added)
+    dfc = diff --cached
+
+    # Check remote details
+    rmt = remote -v
