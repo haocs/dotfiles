@@ -2,19 +2,20 @@
 ---
 
 ### Support Dist
-* OpenSuse
+* openSUSE
 * Debian/Ubuntu
-* MacOS
+* macOS
 
 ### Included Configs
 * Bash
-* Neovim and vim(may not work)
+* Neovim
+* Vim(may not working)
 * Git
-* Dev Languages and Tools: py, ruby, go, nodejs
+* Dev Languages installation: py, ruby, go, nodejs
 
 ### How to use
 ``` bash
-# get git first
+# make sure git is installed
 git clone https://github.com/haocs/dotfiles.git "$HOME/.dotfiles"
 cd dotfiles/bin
 
@@ -26,4 +27,7 @@ source ./setup_suse.sh
 source ./setup_darwin.sh
 ```
 
+### Note
+* For openSUSE, Neovim is built from `git clone https://github.com/haocs/neovim.git` for consitent experience.
+* For macOS, Neovim is installed from latest brew tap
 

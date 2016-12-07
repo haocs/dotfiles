@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-INSTALL_TO="$HOME"
-S_DIR="$HOME/.dotfiles/bash"
-
 clean() {
   FILE="$1"
   if [ -L "$FILE" ]; then
@@ -15,18 +12,33 @@ clean() {
   fi
 }
 
-clean "$INSTALL_TO/.bash_profile"
-clean "$INSTALL_TO/.bashrc"
+DES_DIR="$HOME"
+SOURCE_DIR="$HOME/.dotfiles/bash"
+
+clean "$DES_DIR/.bash_profile"
+clean "$DES_DIR/.bashrc"
+
+# link bash_alias and bash_commands
+ln -nfs "$SOURCE_DIR/bash_alias" "$DES_DIR/.bash_alias"
+ln -nfs "$SOURCE_DIR/bash_commands" "$DES_DIR/.bash_commands"
 
 # reference bashrc in bash_profile
-echo 'test -s ~/.bashrc && . ~/.bashrc || true' >> "$INSTALL_TO/.bash_profile"
-# copy alias files
-echo 'test -s ~/.bash_alias && . ~/.bash_alias || true' >> "$INSTALL_TO/.bashrc"
-ln -nfs "$S_DIR/bash_alias" "$INSTALL_TO/.bash_alias"
-# copy commands files
-echo 'test -s ~/.bash_commands && . ~/.bash_commands || true' >> "$INSTALL_TO/.bashrc"
-ln -nfs "$S_DIR/bash_commands" "$INSTALL_TO/.bash_commands"
+echo 'test -s ~/.bashrc && . ~/.bashrc || true' >> "$DES_DIR/.bash_profile"
 
-echo "update .bashrc config"
-source "$INSTALL_TO/.bashrc"
+echo '################### My Config #####################' >> "$DES_DIR/.bashrc"
+echo '# reference bash_alias' >> "$DES_DIR/.bashrc"
+echo 'test -s ~/.bash_alias && . ~/.bash_alias || true' >> "$DES_DIR/.bashrc"
+echo '' >> "$DES_DIR/.bashrc"
+
+echo '# refernece bash commands' >> "$DES_DIR/.bashrc"
+echo 'export PATH=$PATH:~/.bash_commands' >> "$DES_DIR/.bashrc"
+echo 'export PATH=$PATH:~/.bash_commands/local' >> "$DES_DIR/.bashrc"
+echo '' >> "$DES_DIR/.bashrc"
+
+echo '# config prompt' >> "$DES_DIR/.bashrc"
+echo 'PS1="\u@\h[\w] $"' >> "$DES_DIR/.bashrc"
+echo '' >> "$DES_DIR/.bashrc"
+
+# Update .config
+source "$DES_DIR/.bashrc"
 

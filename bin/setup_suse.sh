@@ -14,74 +14,75 @@ init() {
 }
 
 install_go() {
-	# Install to ~/.local/bin
-	url="https://storage.googleapis.com/golang/go1.6.linux-amd64.tar.gz"
-	wget -qO- "$url" | tar -zxv -C "$HOME/.local/bin"
-	# Set Gopath
-	if [ -f "$HOME/.bashrc" ] ;
-	then
-		echo 'export GOROOT=$HOME/.local/bin/go' | tee -a "$HOME/.bashrc"
-		echo 'export PATH=$GOROOT/bin:$PATH' | tee -a "$HOME/.bashrc"
-	else
-		echo "Set GOROOT manually!"
-	fi
+  # Install to ~/.local/bin
+  url="https://storage.googleapis.com/golang/go1.6.linux-amd64.tar.gz"
+  wget -qO- "$url" | tar -zxv -C "$HOME/.local/bin"
+  # Set Gopath
+  if [ -f "$HOME/.bashrc" ] ;
+  then
+    echo '################### Golang ########################' | tee -a "$HOME/.bashrc"
+    echo 'export GOROOT=$HOME/.local/bin/go' | tee -a "$HOME/.bashrc"
+    echo 'export PATH=$GOROOT/bin:$PATH' | tee -a "$HOME/.bashrc"
+  else
+    echo "Set GOROOT manually!"
+  fi
 }
 
 install_py3() {
-	sudo zypper install python3
-	sudo zypper install python3-devel
+  sudo zypper install python3
+  sudo zypper install python3-devel
 
-	pip_url="https://bootstrap.pypa.io/get-pip.py"
-	wget -qO- "$pip_url" | sudo python3
+  pip_url="https://bootstrap.pypa.io/get-pip.py"
+  wget -qO- "$pip_url" | python3
 
-	sudo pip install jedi
-	sudo pip install python3-pylint
+  sudo pip install jedi
+  sudo pip install python3-pylint
 }
 
 install_nodejs() {
-	NODEJS_VERSION="-6.3.0-113.1.x86_64"
-	sudo zypper install nodejs
+  NODEJS_VERSION="-6.3.0-113.1.x86_64"
+  sudo zypper install nodejs
 }
 
 install_ruby() {
-	gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
-	\curl -sSL https://get.rvm.io | bash -s stable --ruby
+  gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+  \curl -sSL https://get.rvm.io | bash -s stable --ruby
 }
 
 install_neovim() {
-	CUR=`pwd`
-	sudo zypper install libtool autoconf automake cmake gcc-c++
-	sudo zypper install python3-devel python-devel
-	# build from source(my fork)
-	git clone https://github.com/haocs/neovim.git
-	cd neovim
-	rm -r build
-	make clean
-	sudo make CMAKE_BUILD_TYPE=Release
-	sudo make install
-	# ln syntax.vim for neovim. ONLY for SUSE
-	sudo ln -nfs /usr/share/vim/current /usr/local/share/nvim
-	# python client for neovim
-	sudo pip install neovim
-	cd "$CUR"
+  CUR=`pwd`
+  sudo zypper install libtool autoconf automake cmake gcc-c++
+  sudo zypper install python3-devel python-devel
+  # build from source(my fork)
+  git clone https://github.com/haocs/neovim.git
+  cd neovim
+  rm -r build
+  make clean
+  sudo make CMAKE_BUILD_TYPE=Release
+  sudo make install
+  # ln syntax.vim for neovim. ONLY for SUSE
+  sudo ln -nfs /usr/share/vim/current /usr/local/share/nvim
+  # python client for neovim
+  sudo pip install neovim
+  cd "$CUR"
 }
 
 install_chrome() {
-	sudo zypper ar http://dl.google.com/linux/chrome/rpm/stable/x86_64 Google-Chrome
-	sudo zypper ref
-	sudo zypper in google-chrome-stable
+  sudo zypper ar http://dl.google.com/linux/chrome/rpm/stable/x86_64 Google-Chrome
+  sudo zypper ref
+  sudo zypper in google-chrome-stable
 }
 
 install_devtools() {
-	sudo zypper in docker
-	sudo usermod -aG docker $USER
+  sudo zypper in docker
+  sudo usermod -aG docker $USER
 }
 
 load_configs() {
-	# load git, nvim and bash configs
-	source ./config_git.sh
-	source ./config_nvim.sh
-	source ./config_bash.sh
+  # load git, nvim and bash configs
+  source ./config_git.sh
+  source ./config_nvim.sh
+  source ./config_bash.sh
 }
 
 echo "Install dependency..."

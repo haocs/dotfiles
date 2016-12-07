@@ -1,2 +1,6 @@
 # ignore build files
 bin/neovim
+
+# ignore bash_commands/local for corp
+bash/bash_commands/local/
+!bash/bash_commands/local/.keep

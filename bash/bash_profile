@@ -1,1 +1,2 @@
+# Reference .bashrc
 test -s ~/.bashrc && . ~/.bashrc || true
