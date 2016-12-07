@@ -11,6 +11,9 @@
     diff = auto
     status = auto
 
+[pull]
+    rebase = true
+
 [push]
     # Only push current branch to remote
     default = simple
@@ -27,7 +30,7 @@
     acmt = commit -a -m
 
     # Show log in a nicer way
-        hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+    hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
     l = log --graph --format='format:%C(yellow)%h%C(reset) %C(blue)\"%an\" <%ae>%C(reset) %C(magenta)%cr%C(reset)%C(auto)%d%C(reset)%n%s' --date-order
 
     # Diff file with cached version(Diff after file been added)
