@@ -76,7 +76,6 @@
     set listchars=tab:>-          " Use >--- for tabs
   " }
 
-
   " Use modeline overrides
   set modeline
   set modelines=10
@@ -104,8 +103,21 @@
   "}
 
   " Mapping {
-    " Map leader to ,
+    " Map Leader to ,
     let mapleader=','
+
+    " Window navigation {
+      " Allow Alt + {h, j, k, l} to navigate between windows
+      " In all mode including Terminal
+      :tnoremap <A-h> <C-\><C-n><C-w>h
+      :tnoremap <A-j> <C-\><C-n><C-w>j
+      :tnoremap <A-k> <C-\><C-n><C-w>k
+      :tnoremap <A-l> <C-\><C-n><C-w>l
+      :nnoremap <A-h> <C-w>h
+      :nnoremap <A-j> <C-w>j
+      :nnoremap <A-k> <C-w>k
+      :nnoremap <A-l> <C-w>l
+    " }
 
     " Split
     noremap <Leader>h :<C-u>split<CR>
@@ -117,20 +129,20 @@
     nnoremap <silent> <S-t> :tabnew<CR>
 
     " Terminal {
-      nnoremap <silent> <leader>sh :terminal<CR>
+      nnoremap <silent> <Leader>t :terminal<CR>
       " exit 'terminal' mode
       :tnoremap <Esc> <C-\><C-n>
     "}
 
     " Set working directory
-    nnoremap <leader>. :lcd %:p:h<CR>
+    nnoremap <Leader>. :lcd %:p:h<CR>
 
     " Buffer nav
-    noremap <leader>q :bp<CR>
-    noremap <leader>w :bn<CR>
+    noremap <Leader>q :bp<CR>
+    noremap <Leader>w :bn<CR>
 
     " Close buffer
-    noremap <leader>c :bd<CR>
+    noremap <Leader>c :bd<CR>
 
     " Clean search (highlight)
     nnoremap <silent> <leader><space> :noh<cr>
@@ -155,8 +167,9 @@
       Plug 'zchee/deoplete-jedi'
       Plug 'mbbill/undotree'
       Plug 'scrooloose/nerdtree'
-      Plug 'airblade/vim-gitgutter'
       Plug 'tpope/vim-commentary'
+      Plug 'airblade/vim-gitgutter'
+      Plug 'tpope/vim-fugitive'
 
       Plug 'sheerun/vim-polyglot' " Language packs
       Plug 'scrooloose/syntastic'
@@ -193,16 +206,26 @@
 
       " NERDTree KeyMapping
       " Locate current file in file systems
-      nnoremap <silent> <lead>l :NERDTreeFind<CR>
+      nnoremap <silent> <Leader>l :NERDTreeFind<CR>
       noremap <F2> :NERDTreeToggle<CR>
       " Close NERDTree if no other window open
       autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
   " }
 
-  "
   " vim-commentray {
       " to support other file type
       " autocmd FileType apache setlocal commentstring=#\ %s
+  " }
+
+  " fugitive-git {
+    " noremap <Leader>ga :Gwrite<CR>
+    " noremap <Leader>gc :Gcommit<CR>
+    " noremap <Leader>gsh :Gpush<CR>
+    " noremap <Leader>gll :Gpull<CR>
+    noremap <Leader>gs :Gstatus<CR>
+    noremap <Leader>gb :Gblame<CR>
+    noremap <Leader>gd :Gvdiff<CR>
+    " noremap <Leader>gr :Gremove<CR>
   " }
 
   " Color-thems {
@@ -211,64 +234,62 @@
   " }
 
   " Unite {
-      " The prefix key.
-      nnoremap    [unite]   <Nop>
-      nmap    f [unite]
+    call unite#filters#matcher_default#use(['matcher_fuzzy'])
+    nnoremap <Leader>f :<C-u>Unite file_rec/neovim<CR>
+    nnoremap <Leader>e :<C-u>Unite -no-split -buffer-name=mru file_mru<cr>
+    nnoremap <Leader>b :<C-u>Unite -quick-match buffer<cr>
+    nnoremap <Leader>r :<C-u>Unite -no-split -buffer-name=register register<CR>
 
-      call unite#filters#matcher_default#use(['matcher_fuzzy'])
-      nnoremap [unite]f :<C-u>Unite file_rec/neovim<CR>
-      nnoremap [unite]e :<C-u>Unite -no-split -buffer-name=mru file_mru<cr>
-      nnoremap [unite]b :<C-u>Unite -quick-match buffer<cr>
-      nnoremap [unite]r :<C-u>Unite -no-split -buffer-name=register register<CR>
+    " Start insert.
+    call unite#custom#profile('default', 'context', {
+    \   'start_insert': 1
+    \ })
 
-      " Start insert.
-      call unite#custom#profile('default', 'context', {
-      \   'start_insert': 1
-      \ })
+    autocmd FileType unite call s:unite_my_settings()
+    function! s:unite_my_settings()"{{{
+      " Overwrite settings.
 
-      autocmd FileType unite call s:unite_my_settings()
-      function! s:unite_my_settings()"{{{
-        " Overwrite settings.
+      imap <buffer> jj      <Plug>(unite_insert_leave)
+      "imap <buffer> <C-w>     <Plug>(unite_delete_backward_path)
 
-        imap <buffer> jj      <Plug>(unite_insert_leave)
-        "imap <buffer> <C-w>     <Plug>(unite_delete_backward_path)
+      imap <buffer><expr> j unite#smart_map('j', '')
+      imap <buffer> <TAB>   <Plug>(unite_select_next_line)
+      imap <buffer> <C-w>     <Plug>(unite_delete_backward_path)
+      imap <buffer> '     <Plug>(unite_quick_match_default_action)
+      nmap <buffer> '     <Plug>(unite_quick_match_default_action)
+      imap <buffer><expr> x
+            \ unite#smart_map('x', "\<Plug>(unite_quick_match_jump)")
+      nmap <buffer> x     <Plug>(unite_quick_match_jump)
+      nmap <buffer> <C-z>     <Plug>(unite_toggle_transpose_window)
+      imap <buffer> <C-z>     <Plug>(unite_toggle_transpose_window)
+      nmap <buffer> <C-j>     <Plug>(unite_toggle_auto_preview)
+      nmap <buffer> <C-r>     <Plug>(unite_narrowing_input_history)
+      imap <buffer> <C-r>     <Plug>(unite_narrowing_input_history)
+      nnoremap <silent><buffer><expr> l
+            \ unite#smart_map('l', unite#do_action('default'))
 
-        imap <buffer><expr> j unite#smart_map('j', '')
-        imap <buffer> <TAB>   <Plug>(unite_select_next_line)
-        imap <buffer> <C-w>     <Plug>(unite_delete_backward_path)
-        imap <buffer> '     <Plug>(unite_quick_match_default_action)
-        nmap <buffer> '     <Plug>(unite_quick_match_default_action)
-        imap <buffer><expr> x
-                \ unite#smart_map('x', "\<Plug>(unite_quick_match_jump)")
-        nmap <buffer> x     <Plug>(unite_quick_match_jump)
-        nmap <buffer> <C-z>     <Plug>(unite_toggle_transpose_window)
-        imap <buffer> <C-z>     <Plug>(unite_toggle_transpose_window)
-        nmap <buffer> <C-j>     <Plug>(unite_toggle_auto_preview)
-        nmap <buffer> <C-r>     <Plug>(unite_narrowing_input_history)
-        imap <buffer> <C-r>     <Plug>(unite_narrowing_input_history)
-        nnoremap <silent><buffer><expr> l
-                \ unite#smart_map('l', unite#do_action('default'))
+      let unite = unite#get_current_unite()
+      if unite.profile_name ==# 'search'
+        nnoremap <silent><buffer><expr> r     unite#do_action('replace')
+      else
+        nnoremap <silent><buffer><expr> r     unite#do_action('rename')
+      endif
 
-        let unite = unite#get_current_unite()
-        if unite.profile_name ==# 'search'
-          nnoremap <silent><buffer><expr> r     unite#do_action('replace')
-        else
-          nnoremap <silent><buffer><expr> r     unite#do_action('rename')
-        endif
+      nnoremap <silent><buffer><expr> cd     unite#do_action('lcd')
+      nnoremap <buffer><expr> S      unite#mappings#set_current_sorters(
+            \ empty(unite#mappings#get_current_sorters()) ?
 
-        nnoremap <silent><buffer><expr> cd     unite#do_action('lcd')
-        nnoremap <buffer><expr> S      unite#mappings#set_current_sorters(
-                \ empty(unite#mappings#get_current_sorters()) ?
-
-
-        " Runs "split" action by <C-s>.
-        imap <silent><buffer><expr> <C-s>     unite#do_action('split')
-      endfunction"}}}
+      " Runs "split" action by <C-s>.
+      imap <silent><buffer><expr> <C-s>     unite#do_action('split')
+    endfunction"}}}
   " }
 
   " deoplete {
-      let g:deoplete#enable_at_startup = 1
-      let g:deoplete#enable_smart_case = 1
+    let g:deoplete#enable_at_startup = 1
+    let g:deoplete#enable_smart_case = 1
+
+    " deoplete tab-complete
+    inoremap <expr><tab> pumvisible() ? "\<c-n>" :"\<tab>"
   " }
 
 "" }
