@@ -11,13 +11,16 @@ alias ..='cd ..'
 alias .2='cd ../../'
 alias .3='cd ../../../'
 alias .4='cd ../../../../'
+alias .5='cd ../../../../../'
+
+alias .f='cd $HOME/.fastpath'
 
 # Commands history
 alias hist='history'
 
 # For nvim
 if [ -e ~/.config/nvim/init.vim ]; then
-	alias vi="nvim"
-	alias vim="nvim"
+    alias vi="nvim"
+    alias vim="nvim"
 fi
 

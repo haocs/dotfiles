@@ -4,6 +4,7 @@
 
 [core]
     editor = vim
+    pager = less -FMRiX
 
 [color]
     ui = auto
@@ -17,6 +18,9 @@
 [push]
     # Only push current branch to remote
     default = simple
+
+[diff]
+    tool = vimdiff
 
 [alias]
     st = status
@@ -38,3 +42,5 @@
 
     # Check remote details
     rmt = remote -v
+
+    dag = log --graph --format='format:%C(yellow)%h%C(reset) %C(blue)\"%an\" <%ae>%C(reset) %C(magenta)%cr%C(reset)%C(auto)%d%C(reset)%n%s' --date-order
