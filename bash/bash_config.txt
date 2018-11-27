@@ -1,0 +1,14 @@
+################### My Config #####################
+# reference bash_alias
+test -s ~/.bash_alias && . ~/.bash_alias || true
+
+# refernece bash commands
+export PATH=$PATH:~/.bash_commands
+export PATH=$PATH:~/.bash_commands/local
+
+# config prompt
+PS1="\u@\h[\w] $"
+
+# Default colors for ls output
+export CLICOLOR=1
+

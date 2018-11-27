@@ -25,19 +25,8 @@ ln -nfs "$SOURCE_DIR/bash_commands" "$DES_DIR/.bash_commands"
 # reference bashrc in bash_profile
 echo 'test -s ~/.bashrc && . ~/.bashrc || true' >> "$DES_DIR/.bash_profile"
 
-echo '################### My Config #####################' >> "$DES_DIR/.bashrc"
-echo '# reference bash_alias' >> "$DES_DIR/.bashrc"
-echo 'test -s ~/.bash_alias && . ~/.bash_alias || true' >> "$DES_DIR/.bashrc"
-echo '' >> "$DES_DIR/.bashrc"
-
-echo '# refernece bash commands' >> "$DES_DIR/.bashrc"
-echo 'export PATH=$PATH:~/.bash_commands' >> "$DES_DIR/.bashrc"
-echo 'export PATH=$PATH:~/.bash_commands/local' >> "$DES_DIR/.bashrc"
-echo '' >> "$DES_DIR/.bashrc"
-
-echo '# config prompt' >> "$DES_DIR/.bashrc"
-echo 'PS1="\u@\h[\w] $"' >> "$DES_DIR/.bashrc"
-echo '' >> "$DES_DIR/.bashrc"
+# Append bash config
+cat "$SOURCE_DIR/bash_config.txt" >> "$DES_DIR/.bashrc"
 
 # Update .config
 source "$DES_DIR/.bashrc"
