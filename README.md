@@ -17,7 +17,7 @@
 ``` bash
 # make sure git is installed
 git clone https://github.com/haocs/dotfiles.git "$HOME/.dotfiles"
-cd dotfiles/bin
+cd $HOME/.dotfiles/bin
 
 # For deb
 source ./setup_deb.sh
@@ -25,6 +25,12 @@ source ./setup_deb.sh
 source ./setup_suse.sh
 # For macos
 source ./setup_darwin.sh
+
+# To only config git
+./config_git.sh
+# To only config bash
+./config_bash.sh
+
 ```
 
 ### Note
