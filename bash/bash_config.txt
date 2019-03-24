@@ -1,6 +1,7 @@
 ################### My Config #####################
 # reference bash_alias
 test -s ~/.bash_alias && . ~/.bash_alias || true
+test -s ~/.the_latest_check_point && . ~/.the_latest_check_point || true
 
 # refernece bash commands
 export PATH=$PATH:~/.bash_commands

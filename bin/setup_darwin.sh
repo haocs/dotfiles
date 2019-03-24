@@ -38,8 +38,7 @@ load_configs() {
 
 echo "Install dependency..."
 init
-if ! exists wget ; then sudo zypper in wget; fi
-if ! exists curl ; then sudo zypper in curl; fi
+if ! exists wget ; then brew install wget --with-libressl; fi
 if ! exists pip; then install_pip; fi
 if ! exists nvim ; then install_neovim; fi
 

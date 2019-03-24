@@ -1,0 +1,9 @@
+##################check point#####################
+# This command creates a check point of the current dir
+# Then from another session/dir, tyep "ccc" to jump to the check point.
+# Make sure that "$HOME/.the_latest_check_point" is referenced.
+# in "$HOME/.bashrc" file
+#################################################
+
+CHECK_POINT="$HOME/.the_latest_check_point"
+echo "alias ccc='cd `pwd`'" > "$CHECK_POINT"
